@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import { View, Text, Image, StyleSheet, Dimensions, TouchableOpacity, Modal } from "react-native";
+import { View, Text, StyleSheet, Dimensions, TouchableOpacity, Modal } from "react-native";
 import { useRouter } from "expo-router";
 import Animated, {
   useSharedValue,
@@ -27,7 +27,7 @@ const CENTER_Y = height / 2;
 const NUM_CARDS = 20;
 const CARD_WIDTH = 100; 
 const CARD_HEIGHT = 180;
-const MIN_RADIUS = 260;
+const MIN_RADIUS = 230;
 
 export default function Main() {
   const router = useRouter();
@@ -92,6 +92,7 @@ export default function Main() {
       });
 
       return <Animated.View key={index} style={animatedStyle} />;
+      
     });
   };
   
@@ -102,23 +103,23 @@ export default function Main() {
   };
 
   return (
-      <View>
+      <View >
           {/* {renderCards()} */}
-        <View style={styles.mainTitleWrapper}>
-          <Text style={styles.appText}>Your Favorite Random Game</Text>
-          <TouchableOpacity 
-            style={styles.playButton} 
-            onPress={handleSelectRandomGame}
-          >
-            <Text style={styles.buttonText}>Pick a Random Game</Text>
-            <Ionicons 
-              name="chevron-forward-outline" 
-              size={24} 
-              color="#000"
-            />
-          </TouchableOpacity>
-        </View>
-        <Modal
+          <View style={styles.mainTitleWrapper}>
+            <Text style={styles.appText}>Your Favorite Random Game</Text>
+            <TouchableOpacity 
+              style={styles.playButton} 
+              onPress={handleSelectRandomGame}
+            >
+              <Text style={styles.buttonText}>Pick a Random Game</Text>
+              <Ionicons 
+                name="chevron-forward-outline" 
+                size={24} 
+                color="#000"
+              />
+            </TouchableOpacity>
+          </View>
+          <Modal
           animationType="slide"
           transparent={false}
           visible={modalVisible}
@@ -160,6 +161,10 @@ export default function Main() {
 }
 
 const styles = StyleSheet.create({
+  mainContainer: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.5)',
+  },
   mainTitleWrapper:{
     display: 'flex',
     justifyContent: "center",
@@ -189,11 +194,10 @@ const styles = StyleSheet.create({
     transform: [{translateY: -2}]
   },
   modalOverlay: {
-    zIndex: 100,
     flex: 1,
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems:'center',
     backgroundColor: "rgba(0, 0, 0, 0.5)",
   },
   modalContent: {

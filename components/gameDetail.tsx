@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, ScrollView, StyleSheet } from "react-native";
-import { Game,  } from "../types";
+import { Game  } from "../types";
 
 interface GameDetailProps {
   game: Game;

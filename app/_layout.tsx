@@ -6,16 +6,18 @@ import {
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import {
   View,
   StyleSheet,
   Dimensions,
   Image,
-  Button,
-  StatusBar as RNStatusBar,
+  Animated,
+  TouchableWithoutFeedback,
 } from "react-native";
 import { useColorScheme } from "@/hooks/useColorScheme";
+import { Ionicons } from "@expo/vector-icons";
+import Menu from "@/components/menu";
 
 const screenWidth = Dimensions.get("window").width;
 
@@ -28,6 +30,26 @@ export default function RootLayout() {
     SpaceMono: require("@/assets/fonts/SpaceMono-Regular.ttf"),
   });
   const [showSplash, setShowSplash] = useState(true);
+  const [menuVisible, setMenuVisible] = useState(false);
+  const menuAnimation = useRef(new Animated.Value(-screenWidth)).current;
+
+  //Drawer Manu Toogle Handler
+  const toggleMenu = () => {
+    if (menuVisible) {
+      Animated.timing(menuAnimation, {
+        toValue: -screenWidth, // Slide out
+        duration: 300,
+        useNativeDriver: false,
+      }).start(() => setMenuVisible(false));
+    } else {
+      setMenuVisible(true);
+      Animated.timing(menuAnimation, {
+        toValue: 0, // Slide in
+        duration: 300,
+        useNativeDriver: false,
+      }).start();
+    }
+  };
 
   useEffect(() => {
     let timer: string | number | NodeJS.Timeout | undefined;
@@ -61,28 +83,78 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-      <Stack
-        screenOptions={{
-          headerStyle: { backgroundColor: 'transparent' },
-        }}
-      >
-        <Stack.Screen 
-          name="index" 
-          options={{ 
-            headerTitle: "",
-            headerTransparent: true,
+      <View style={styles.drawer}>
+        {/* Sliding Drawer Menu */}
+        <Animated.View
+          style={[
+            styles.menu,
+            { transform: [{ translateX: menuAnimation }] },
+          ]}
+        >
+        <Menu handler={toggleMenu}/>
+        </Animated.View>
+
+        {/* Overlay */}
+        {menuVisible && (
+          <TouchableWithoutFeedback onPress={toggleMenu}>
+            <View style={styles.overlay} />
+          </TouchableWithoutFeedback>
+        )}
+
+        {/* Navigation */}
+        <Stack
+          screenOptions={{
+            headerStyle: { backgroundColor: 'transparent' },
           }}
-        />
-        <Stack.Screen name="+not-found" />
-        <Stack.Screen 
-          name="game/[id]" 
-          options={{ 
-            headerTitle: "",
-            headerTransparent: true,
-          }}
-        />
-      </Stack>
-      <RNStatusBar />
+        >
+          <Stack.Screen 
+            name="index" 
+            options={{ 
+              headerTitle: "",
+              headerTransparent: true,
+              headerBackVisible: false,
+              headerLeft: () => (
+                <Ionicons
+                  name="menu-outline" 
+                  size={24} 
+                  color="#000"
+                  onPress={toggleMenu}
+                />
+              ),
+              headerRight: () => (
+                <Ionicons
+                  name="share-social-outline" 
+                  size={24} 
+                  color="#000"
+                />
+              )
+            }}
+          />
+          <Stack.Screen 
+            name="game/[id]" 
+            options={{ 
+              headerTitle: "",
+              headerTransparent: true,
+              headerBackVisible: true,
+              headerLeft: () => (
+                <Ionicons
+                  name="menu-outline" 
+                  size={24} 
+                  color="#000"
+                  onPress={toggleMenu}
+                />
+              ),
+              headerRight: () => (
+                <Ionicons
+                  name="share-social-outline" 
+                  size={24} 
+                  color="#000"
+                />
+              )
+            }}
+          />
+        </Stack>
+      </View>
     </ThemeProvider>
   );
 }
@@ -101,6 +173,30 @@ const styles = StyleSheet.create({
   },
   headerBackground: {
     flex: 1,
-    height: 100, // Adjust the header height here
+    height: 100,
+  },
+  drawer: {
+    flex: 1,
+    backgroundColor: "#3F3F3F",
+  },
+  menu: {
+    position: "absolute",
+    top: 0,
+    bottom: 0,
+    left: 0,
+    width: screenWidth * 0.70,
+    backgroundColor: "#3F3F3F",
+    zIndex: 10,
+    shadowColor: "#000",
+    shadowOpacity: 0.2,
+    shadowOffset: { width: 2, height: 0 },
+    shadowRadius: 5,
+    padding: 16,
+    borderTopRightRadius: 30,
+  },
+  overlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    zIndex: 5,
   },
 });
