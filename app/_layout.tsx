@@ -61,26 +61,27 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="index" options={{ headerShown: false }} />
+      <Stack
+        screenOptions={{
+          headerStyle: { backgroundColor: 'transparent' },
+        }}
+      >
+        <Stack.Screen 
+          name="index" 
+          options={{ 
+            headerTitle: "",
+            headerTransparent: true,
+          }}
+        />
         <Stack.Screen name="+not-found" />
-        <Stack.Screen
-          name="game/[id]"
-          options={({ navigation }) => ({
-            headerTitle: "게임 상세 페이지",
-            headerBackTitle: "Back",
-            headerLeft: () => (
-              <Button
-                title="Back"
-                onPress={() => {
-                  navigation.navigate("index");
-                }}
-              />
-            ),
-          })}
+        <Stack.Screen 
+          name="game/[id]" 
+          options={{ 
+            headerTitle: "",
+            headerTransparent: true,
+          }}
         />
       </Stack>
-
       <RNStatusBar />
     </ThemeProvider>
   );
@@ -97,5 +98,9 @@ const styles = StyleSheet.create({
     width: 200,
     height: 200,
     resizeMode: "contain",
+  },
+  headerBackground: {
+    flex: 1,
+    height: 100, // Adjust the header height here
   },
 });

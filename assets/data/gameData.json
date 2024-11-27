@@ -1,0 +1,67 @@
+{
+    "games": [
+      {
+        "id": 1,
+        "EngName": "The game of death",
+        "KorName": "더 게임 오프 데스",
+        "Pronounce": "Deo Geim Opeu Deseu",
+        "Attributes": {
+          "Difficulty": "Low",
+          "NoiseLevel": "Low",
+          "RiskLevel": "Medium",
+          "Required": "None"
+        },
+        "HowToPlay": {
+          "step01": "Each player rolls the dice to move forward.",
+          "step02": "Draw a card when landing on special tiles.",
+          "step03": "First player to reach the mystic orb wins."
+        },
+        "SeeItInAction": [
+          "https://www.youtube.com/watch?v=nh5uNYCQ76Y",
+          "https://www.youtube.com/watch?v=cS77NtMoaVY"
+        ]
+      },
+      {
+        "id": 2,
+        "EngName": "Galaxy Adventure",
+        "KorName": "갤럭시 어드벤처",
+        "Pronounce": "Gae-leok-shi Uh-duh-ben-chuh",
+        "Attributes": {
+          "Difficulty": "Hard",
+          "NoiseLevel": "High",
+          "RiskLevel": "High",
+          "Required": "3 players, 1 game board, 20 tokens"
+        },
+        "HowToPlay": {
+          "step01": "Pick a spaceship and place it on the start.",
+          "step02": "Collect tokens by completing missions.",
+          "step03": "Avoid black holes and reach the galaxy center."
+        },
+        "SeeItInAction": [
+          "https://example.com/galaxy-adventure-demo1",
+          "https://example.com/galaxy-adventure-demo2"
+        ]
+      },
+      {
+        "id": 3,
+        "EngName": "Shadow Hunt",
+        "KorName": "쉐도우 헌트",
+        "Pronounce": "Shweh-doh-hoo Heon-teu",
+        "Attributes": {
+          "Difficulty": "Easy",
+          "NoiseLevel": "Medium",
+          "RiskLevel": "Low",
+          "Required": "4 players, 1 timer, 15 shadow cards"
+        },
+        "HowToPlay": {
+          "step01": "Shuffle the shadow cards and place them face down.",
+          "step02": "Each player picks a card and performs the action.",
+          "step03": "The hunter wins if they find all shadows before time runs out."
+        },
+        "SeeItInAction": [
+          "https://example.com/shadow-hunt-demo1",
+          "https://example.com/shadow-hunt-demo2"
+        ]
+      }
+    ]
+  }
