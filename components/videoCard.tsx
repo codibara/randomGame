@@ -1,29 +1,43 @@
 import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity, Linking } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, Linking, FlatList } from "react-native";
+import YouTubeIframe from 'react-native-youtube-iframe';
 
 interface VideoCardProps {
     link: string[];
   }
 
   const VideoCard: React.FC<VideoCardProps> = ({ link }) => {
-    const handleOpenLink = (url: string) => {
-        Linking.openURL(url).catch((err) => console.error("Failed to open URL:", err));
-      };
+    // const handleOpenLink = (url: string) => {
+    //     Linking.openURL(url).catch((err) => console.error("Failed to open URL:", err));
+    //   };
+
+    const extractVideoId = (url: string) => {
+      const regex = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/;
+      const match = url.match(regex);
+      return match ? match[1] : null;
+    };
 
     return (
       <View style={styles.container}>
-        {link.map((link, index) => (
-            <TouchableOpacity 
-                key={index} 
-                onPress={() => handleOpenLink(link)}
-                style={styles.videoCard}
-            >
-                <View style={styles.thumbnail}></View>
-                <Text style={styles.linkText}>
-                    {link}
-                </Text>
-          </TouchableOpacity>
-        ))}
+        <View style={styles.videoCardContainer} >
+          {link.map((link, index) => {
+            const videoId = extractVideoId(link);
+            return (
+              <View key={index}>
+                {videoId ? (
+                  <YouTubeIframe
+                    videoId={videoId}
+                    height={200}
+                  />
+                ) : (
+                  <View style={styles.invalidUrlContainer}>
+                    <Text style={styles.invalidUrlText}>Invalid YouTube URL</Text>
+                  </View>
+                )}
+              </View>
+            );
+          })}
+        </View>
       </View>
     );
   };
@@ -31,32 +45,28 @@ interface VideoCardProps {
   export default VideoCard;
   
   const styles = StyleSheet.create({
-    container: {
-        paddingVertical: 36,
+    container:{
+      padding: 20,
+    },
+    videoCardContainer: {
         display: "flex",
         flexDirection: "column",
         rowGap: 16,
+        padding: 20,
+        marginVertical: 30,
+        backgroundColor: "rgba(28, 3, 17, 0.7)",
+        borderRadius: 24,
     },
-    thumbnail:{
-        width: "36%",
-        aspectRatio: 16/9,
-        backgroundColor: "#6a6a6a",
-        borderRadius: 8,
+    videoContainer: {
+      marginBottom: 20,
     },
-    videoCard: {
-        flex: 1,
-        display: "flex",
-        flexDirection: "row",
-        columnGap: 20,
-        padding: 12,
-        backgroundColor: "rgba(0, 0, 0, 0.7)",
-        borderRadius: 4,
+    invalidUrlContainer: {
+      height: 200,
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: '#f0f0f0',
     },
-    linkText: {
-        flex: 1, 
-        flexWrap: "wrap",
-        fontSize: 16,
-        color: "#ffffff",
-        textDecorationLine: "underline",
-    }
+    invalidUrlText: {
+      color: '#ff0000',
+    },
   });

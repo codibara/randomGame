@@ -1,6 +1,6 @@
 import React from "react";
-import { useState } from "react";
-import { View, Text, StyleSheet, Dimensions, TouchableOpacity, Modal } from "react-native";
+import { useState, useEffect } from "react";
+import { View, Text, StyleSheet, Dimensions, TouchableOpacity, Modal, ImageBackground } from "react-native";
 import { useRouter } from "expo-router";
 import Animated, {
   useSharedValue,
@@ -8,8 +8,11 @@ import Animated, {
   withRepeat,
   withTiming,
 } from 'react-native-reanimated';
-import { useFocusEffect } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
+import { useFocusEffect } from "@react-navigation/native";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+import CustomButton from "./ui/button";
 import gameData from "@/assets/data/gameData.json";
 import { Game } from "@/types";
 
@@ -34,8 +37,25 @@ export default function Main() {
   const baseRotation = useSharedValue(0);
   const [selectedGame, setSelectedGame] = useState<Game | null>(null); 
   const [modalVisible, setModalVisible] = useState(false);
+  const [nickname, setNickname] = useState('Your');
+
+  //get nickname from the storage and set nickname
+  useEffect(() => {
+    const fetchNickname = async () => {
+      try {
+        const savedNickname = await AsyncStorage.getItem('nickname'); // 
+        if (savedNickname) {
+          setNickname(savedNickname);
+        }
+      } catch (error) {
+        console.error('Error fetching nickname:', error);
+      }
+    };
+
+    fetchNickname();
+  }, []); 
   
-  React.useEffect(() => {
+  useEffect(() => {
     baseRotation.value = withRepeat(withTiming(360, { duration: 8000 }), -1, false);
   }, []);
 
@@ -103,132 +123,132 @@ export default function Main() {
   };
 
   return (
-      <View >
+      <ImageBackground 
+        style={styles.mainContainer}
+        source={require("@/assets/images/Paper_texture.png")}
+      >
           {/* {renderCards()} */}
           <View style={styles.mainTitleWrapper}>
-            <Text style={styles.appText}>Your Favorite Random Game</Text>
-            <TouchableOpacity 
-              style={styles.playButton} 
-              onPress={handleSelectRandomGame}
-            >
-              <Text style={styles.buttonText}>Pick a Random Game</Text>
-              <Ionicons 
-                name="chevron-forward-outline" 
-                size={24} 
-                color="#000"
+            <Text style={styles.appText1}>{nickname}'s FAV</Text>
+            <Text style={styles.appText2}>Random Game</Text>
+          </View>
+          <View style={styles.playButton}>
+              <CustomButton 
+                  text={'GAME START'}
+                  onPress={handleSelectRandomGame}
               />
-            </TouchableOpacity>
           </View>
           <Modal
           animationType="slide"
-          transparent={false}
+          transparent={true}
           visible={modalVisible}
           onRequestClose={() => setModalVisible(false)}
         >
           <View style={styles.modalOverlay}>
-            <View style={styles.modalContent}>
-              {selectedGame && (
-                <>
-                  <Text style={styles.modalTitle}>{selectedGame.EngName}</Text>
-                  <Text style={styles.modalSubtitle}>
-                    {selectedGame.KorName} [{selectedGame.Pronounce}]
-                  </Text>
-                  <Text style={styles.modalAttributes}>
-                    Difficulty: {selectedGame.Attributes.Difficulty}
-                  </Text>
-                  <Text style={styles.modalAttributes}>
-                    Required: {selectedGame.Attributes.Required}
-                  </Text>
-                  <TouchableOpacity 
-                    style={styles.closeButton}
-                    onPress={() => router.push(`/game/${selectedGame.id}`)}
-                  >
-                    <Text style={styles.closeButtonText}>See Details</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
+            <ImageBackground 
+              source={require("@/assets/images/excardbackimg.png")}
+              style={styles.modalContent}
+              imageStyle={{ borderRadius: 16,}}
+            >
+              <View style={styles.closeButtonWrapper}>
+                <TouchableOpacity
                     style={styles.closeButton}
                     onPress={() => setModalVisible(false)}
                   >
-                    <Text style={styles.closeButtonText}>Close</Text>
-                  </TouchableOpacity>
-                </>
-              )}
-            </View>
+                    <Ionicons
+                      name="close-outline" 
+                      size={24} 
+                      color="#000"
+                  />
+                </TouchableOpacity>
+              </View>
+              <View style={styles.cardContent}>
+                {selectedGame && (
+                  <>
+                    <Text style={styles.modalTitle}>{selectedGame.EngName}</Text>
+                    <ImageBackground 
+                      source={require("@/assets/images/excardgameimg.png")}
+                      style={styles.cardGameImg}
+                    />
+                    <CustomButton 
+                      text={'MORE DETAILS'}
+                      onPress={() => router.push(`/game/${selectedGame.id}`)}
+                    />
+                  </>
+                )}
+              </View>
+            </ImageBackground>
           </View>
         </Modal>
-      </View>
+      </ImageBackground>
     );
 }
 
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
-    backgroundColor: 'rgba(0,0,0,0.5)',
-  },
-  mainTitleWrapper:{
     display: 'flex',
-    justifyContent: "center",
-    alignItems: "center",
-    height: '100%',
-    zIndex: -1,
+    alignItems: 'center',
   },
-  appText:{
-    fontWeight: 800,
+  mainTitleWrapper: {
+    width: width * 0.9,
+    marginTop: height * 0.3,
+    maxWidth: 450,
+  },
+  appText1: {
+    fontFamily: "HakgyoansimBold600",
+    fontSize: 32,
+    textTransform: 'uppercase',
+  },
+  appText2: {
+    fontFamily: "HakgyoansimBold600",
     fontSize: 40,
-    textAlign: "center",
     marginBottom: 30,
+    textTransform: 'uppercase',
   },
-  playButton:{
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 4,
-    paddingVertical: 16,
-    paddingHorizontal: 32,
-    borderRadius: 50,
-    backgroundColor: "#ffffff",
-  },
-  buttonText: {
-    fontWeight: 800,
-    fontSize: 24,
-    transform: [{translateY: -2}]
+  playButton: {
+    position: 'absolute',
+    bottom: 56,
+    width: width * 0.9,
+    maxWidth: 400,
   },
   modalOverlay: {
     flex: 1,
     display: 'flex',
+    alignItems: 'center',
     justifyContent: 'center',
-    alignItems:'center',
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    backgroundColor: 'rgba(0, 0, 0, 0)',
   },
   modalContent: {
-    height: 500,
-    width: 350,
-    backgroundColor: "#fff",
+    display: 'flex',
+    justifyContent: 'flex-end',
+    marginTop: height * 0.25,
+    height: 420,
+    width: 260,
+    backgroundColor: '#fff',
     padding: 20,
     borderRadius: 16,
-    alignItems: "center",
   },
   modalTitle: {
+    fontFamily: "GmarketSansBold",
+    textAlign: 'center',
     fontSize: 24,
-    fontWeight: "bold",
-    marginBottom: 10,
   },
-  modalSubtitle: {
-    fontSize: 16,
-    marginBottom: 10,
-  },
-  modalAttributes: {
-    fontSize: 14,
-    marginBottom: 10,
-    textAlign: "center",
+  closeButtonWrapper: {
+    display: 'flex',
+    alignItems: 'flex-end',
   },
   closeButton: {
-    backgroundColor: "#e23f99",
     padding: 10,
-    borderRadius: 8,
   },
-  closeButtonText: {
-    color: "#fff",
-    fontWeight: "bold",
+  cardContent:{
+    flex: 1,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
+  cardGameImg:{
+    width: 200,
+    aspectRatio: 1/1,
+  }
 });

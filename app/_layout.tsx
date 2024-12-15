@@ -4,7 +4,7 @@ import {
   ThemeProvider,
 } from "@react-navigation/native";
 import { useFonts } from "expo-font";
-import { Stack } from "expo-router";
+import { router, Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect, useState, useRef } from "react";
 import {
@@ -26,8 +26,12 @@ SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
-  const [loaded] = useFonts({
+  const [fontsLoaded] = useFonts({
     SpaceMono: require("@/assets/fonts/SpaceMono-Regular.ttf"),
+    GmarketSansBold: require("@/assets/fonts/GmarketSansTTFBold.ttf"),
+    GmarketSansLight: require("@/assets/fonts/GmarketSansTTFLight.ttf"),
+    GmarketSansMedium: require("@/assets/fonts/GmarketSansTTFMedium.ttf"),
+    HakgyoansimBold600: require("@/assets/fonts/HakgyoansimMoheomgaB.ttf"),
   });
   const [showSplash, setShowSplash] = useState(true);
   const [menuVisible, setMenuVisible] = useState(false);
@@ -55,7 +59,7 @@ export default function RootLayout() {
     let timer: string | number | NodeJS.Timeout | undefined;
 
     const prepareApp = async () => {
-      if (loaded) {
+      if (fontsLoaded) {
         // Hide splash screen after fonts are loaded
         await SplashScreen.hideAsync();
         // Set splash timeout
@@ -68,9 +72,9 @@ export default function RootLayout() {
     return () => {
       if (timer) clearTimeout(timer);
     };
-  }, [loaded]);
+  }, [fontsLoaded]);
 
-  if (!loaded || showSplash) {
+  if (!fontsLoaded || showSplash) {
     return (
       <View style={styles.splashContainer}>
         <Image
@@ -83,78 +87,102 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-      <View style={styles.drawer}>
-        {/* Sliding Drawer Menu */}
-        <Animated.View
-          style={[
-            styles.menu,
-            { transform: [{ translateX: menuAnimation }] },
-          ]}
-        >
-        <Menu handler={toggleMenu}/>
-        </Animated.View>
+        <View style={styles.drawer}>
+          {/* Sliding Drawer Menu */}
+          <Animated.View
+            style={[
+              styles.menu,
+              { transform: [{ translateX: menuAnimation }] },
+            ]}
+          >
+          <Menu handler={toggleMenu}/>
+          </Animated.View>
 
-        {/* Overlay */}
-        {menuVisible && (
-          <TouchableWithoutFeedback onPress={toggleMenu}>
-            <View style={styles.overlay} />
-          </TouchableWithoutFeedback>
-        )}
-
-        {/* Navigation */}
-        <Stack
-          screenOptions={{
-            headerStyle: { backgroundColor: 'transparent' },
-          }}
-        >
-          <Stack.Screen 
-            name="index" 
-            options={{ 
-              headerTitle: "",
-              headerTransparent: true,
-              headerBackVisible: false,
-              headerLeft: () => (
-                <Ionicons
-                  name="menu-outline" 
-                  size={24} 
-                  color="#000"
-                  onPress={toggleMenu}
-                />
-              ),
-              headerRight: () => (
-                <Ionicons
-                  name="share-social-outline" 
-                  size={24} 
-                  color="#000"
-                />
-              )
+          {/* Overlay */}
+          {menuVisible && (
+            <TouchableWithoutFeedback onPress={toggleMenu}>
+              <View style={styles.overlay} />
+            </TouchableWithoutFeedback>
+          )}
+          
+          {/* Navigation */}
+          <Stack
+            screenOptions={{
+              headerStyle: { backgroundColor: 'transparent' },
             }}
-          />
-          <Stack.Screen 
-            name="game/[id]" 
-            options={{ 
-              headerTitle: "",
-              headerTransparent: true,
-              headerBackVisible: true,
-              headerLeft: () => (
-                <Ionicons
-                  name="menu-outline" 
-                  size={24} 
-                  color="#000"
-                  onPress={toggleMenu}
-                />
-              ),
-              headerRight: () => (
-                <Ionicons
-                  name="share-social-outline" 
-                  size={24} 
-                  color="#000"
-                />
-              )
-            }}
-          />
-        </Stack>
-      </View>
+          >
+            <Stack.Screen 
+              name="index" 
+              options={{ 
+                headerTitle: "",
+                headerTransparent: true,
+                headerBackVisible: false,
+                headerLeft: () => (
+                  <Ionicons
+                    name="menu-outline" 
+                    size={24} 
+                    color="#000"
+                    onPress={toggleMenu}
+                  />
+                ),
+                headerRight: () => (
+                  <Ionicons
+                    name="share-social-outline" 
+                    size={24} 
+                    color="#000"
+                    onPress={()=>router.push('/login')}
+                  />
+                )
+              }}
+            />
+            <Stack.Screen 
+              name="game/[id]" 
+              options={{ 
+                headerTitle: "",
+                headerTransparent: true,
+                headerBackVisible: true,
+                headerLeft: () => (
+                  <Ionicons
+                    name="menu-outline" 
+                    size={24} 
+                    color="#000"
+                    onPress={toggleMenu}
+                  />
+                ),
+                headerRight: () => (
+                  <Ionicons
+                    name="share-social-outline" 
+                    size={24} 
+                    color="#000"
+                  />
+                )
+              }}
+            />
+            <Stack.Screen 
+              name="settings" 
+              options={{ 
+                headerTitle: "SETTINGS",
+                headerTransparent: true,
+                headerBackVisible: false,
+                headerTitleAlign: "center", 
+                headerLeft: () => (
+                  <Ionicons
+                    name="menu-outline" 
+                    size={24} 
+                    color="#000"
+                    onPress={toggleMenu}
+                  />
+                )
+              }}
+            />
+            <Stack.Screen 
+                name="login"
+                options={{ 
+                  headerShown: false,
+                }}
+              />
+          </Stack>
+        </View>
     </ThemeProvider>
   );
 }
@@ -171,13 +199,8 @@ const styles = StyleSheet.create({
     height: 200,
     resizeMode: "contain",
   },
-  headerBackground: {
-    flex: 1,
-    height: 100,
-  },
   drawer: {
     flex: 1,
-    backgroundColor: "#3F3F3F",
   },
   menu: {
     position: "absolute",
@@ -185,14 +208,13 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     width: screenWidth * 0.70,
-    backgroundColor: "#3F3F3F",
+    backgroundColor: "#010101",
     zIndex: 10,
     shadowColor: "#000",
     shadowOpacity: 0.2,
     shadowOffset: { width: 2, height: 0 },
     shadowRadius: 5,
-    padding: 16,
-    borderTopRightRadius: 30,
+    borderTopRightRadius: 36,
   },
   overlay: {
     ...StyleSheet.absoluteFillObject,

@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, ScrollView, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, ImageBackground } from "react-native";
 import { Game  } from "../types";
 
 interface GameDetailProps {
@@ -8,49 +8,68 @@ interface GameDetailProps {
 
 export default function GameDetail({ game }: GameDetailProps) {
   return (
-    <View>
-      <View style={styles.korTitleContainer}>
-        <Text>{game.KorName}</Text>
+    <View style={styles.container}>
+      <ImageBackground 
+        style={styles.titleContainer}
+        source={require("@/assets/images/torn-paper.png")}
+      >
+        <Text style={styles.korTitle}>{game.KorName}</Text>
         <Text style={styles.pronounceText}>{'[' + game.Pronounce + ']'}</Text>
-      </View>
-      <Text style={styles.engTitle} >{game.EngName}</Text>
+        <Text style={styles.engTitle} >{game.EngName}</Text>
+      </ImageBackground>
+      
       <View style={styles.attributeWrapper}>
         {Object.entries(game.Attributes).map(([key, value]) => (
-          <View key={key} style={styles.attributeContainer}>
+          <ImageBackground 
+            key={key} 
+            source={require("@/assets/images/attributeBgImg.png")}
+            style={styles.attributeContainer}
+            imageStyle={{ borderRadius: 12, resizeMode: 'cover', width: 'auto', height: 'auto'}}
+          >
             <Text style={styles.attributeHeading}>{key}</Text>
             <Text>{value}</Text>
-          </View>
+          </ImageBackground>
         ))}      
         </View>
+        <ImageBackground 
+          source={require("@/assets/images/torn-line.png")}
+          style={styles.divider}
+        ></ImageBackground>
     </View>
   );
 }
 
 
 const styles = StyleSheet.create({
-  container: {
-    padding: 20,
-    backgroundColor: "#FFFFFF",
+  container:{
+    paddingBottom: 20,
   },
-  korTitleContainer: {
+  titleContainer: {
+    height: 300,
+    flex: 1,
     display: "flex",
-    flexDirection: "row",
-    gap: 12,
+    gap: 8,
+    marginBottom: 16,
+    paddingTop: 26,
+    padding: 20,
+  },
+  korTitle:{
+    fontFamily: "GmarketSansLight",
   },
   pronounceText:{
-    color: "#A1A0A0"
+    fontFamily: "GmarketSansLight",
+    color: "#A1A0A0",
+    fontSize: 12,
   },
   engTitle: {
+    fontFamily: "HakgyoansimBold600",
     flex: 1, 
     flexWrap: "wrap",
-    fontSize: 50,
+    fontSize: 40,
     textTransform: "uppercase",
-    fontWeight: 900,
-    lineHeight: 70,
-    marginBottom: 100,
   },
   attributeHeading: {
-    fontWeight: "bold",
+    fontFamily: "GmarketSansMedium",
   },
   attributeWrapper: {
     flex: 1,
@@ -58,6 +77,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flexWrap: "wrap",
     gap: 12,
+    paddingHorizontal: 20,
+    paddingBottom: 50,
   },
   attributeContainer: {
     width: "48%",
@@ -65,5 +86,15 @@ const styles = StyleSheet.create({
     backgroundColor: "#ffffff",
     borderRadius: 4,
     padding: 12,
+    borderWidth:1,
+    borderColor: '#D9D9D9',
   },
+  divider: {
+    position: 'absolute',
+    bottom: -60,
+    flex: 1,
+    width: 400,
+    height: 100,
+    zIndex: 5,
+  }
 });

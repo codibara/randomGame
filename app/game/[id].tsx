@@ -1,5 +1,5 @@
 import { useLocalSearchParams } from "expo-router";
-import { View, Text, StyleSheet, ScrollView } from "react-native";
+import { View, Text, StyleSheet, ScrollView, ImageBackground } from "react-native";
 import { Link } from "expo-router";
 import gameData from "@/assets/data/gameData.json";
 import GameDetail from "@/components/gameDetail";
@@ -19,22 +19,19 @@ export default function GameScreen() {
   }
 
   return (
-    <>
       <ScrollView style={styles.container}>
-        <View>
+        <ImageBackground
+          source={require("@/assets/images/Paper_texture.png")}
+        >
           <GameDetail game={game}/>
-        </View>
-        <View>
+        </ImageBackground>
+        <ImageBackground
+          source={require("@/assets/images/logo-pattern.png")}
+        >
           <HowToPlayDetail howToPlay={game.HowToPlay}/>
           <VideoCard link={game.SeeItInAction}/>
-        </View>
-        
+        </ImageBackground>
       </ScrollView>
-      {/* <View style={styles.container}>
-        <Link href="/game/1">A.P.T Game</Link>
-        <Link href="/game/2">3! 6! 9!</Link>
-      </View> */}
-    </>
   );
 }
 
@@ -42,10 +39,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginTop: 50,
-    paddingHorizontal: 20,
   },
-  list: {
-    fontSize: 20,
-    fontWeight: "bold",
-  },
+
 });
