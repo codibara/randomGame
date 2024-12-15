@@ -192,7 +192,7 @@ const styles = StyleSheet.create({
   },
   mainTitleWrapper: {
     width: width * 0.9,
-    marginTop: height * 0.3,
+    marginTop: height * 0.20,
     maxWidth: 450,
   },
   appText1: {
@@ -222,9 +222,9 @@ const styles = StyleSheet.create({
   modalContent: {
     display: 'flex',
     justifyContent: 'flex-end',
-    marginTop: height * 0.25,
-    height: 420,
-    width: 260,
+    marginTop: height * 0.3,
+    width: width * 0.7,
+    aspectRatio: 13/21,
     backgroundColor: '#fff',
     padding: 20,
     borderRadius: 16,

@@ -140,7 +140,7 @@ export default function RootLayout() {
               options={{ 
                 headerTitle: "",
                 headerTransparent: true,
-                headerBackVisible: true,
+                headerBackVisible: false,
                 headerLeft: () => (
                   <Ionicons
                     name="menu-outline" 

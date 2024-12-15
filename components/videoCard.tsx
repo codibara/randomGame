@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity, Linking, FlatList } from "react-native";
+import { View, Text, StyleSheet} from "react-native";
 import YouTubeIframe from 'react-native-youtube-iframe';
 
 interface VideoCardProps {
@@ -7,10 +7,6 @@ interface VideoCardProps {
   }
 
   const VideoCard: React.FC<VideoCardProps> = ({ link }) => {
-    // const handleOpenLink = (url: string) => {
-    //     Linking.openURL(url).catch((err) => console.error("Failed to open URL:", err));
-    //   };
-
     const extractVideoId = (url: string) => {
       const regex = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/;
       const match = url.match(regex);

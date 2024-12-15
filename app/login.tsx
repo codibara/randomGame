@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet, Dimensions, TouchableOpacity, Modal, ImageBackground } from "react-native";
+import { View, Text, StyleSheet, Dimensions, ImageBackground } from "react-native";
 
 import CustomButton from "@/components/ui/button";
 import { router } from "expo-router";

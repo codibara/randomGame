@@ -1,6 +1,5 @@
 import { useLocalSearchParams } from "expo-router";
 import { View, Text, StyleSheet, ScrollView, ImageBackground } from "react-native";
-import { Link } from "expo-router";
 import gameData from "@/assets/data/gameData.json";
 import GameDetail from "@/components/gameDetail";
 import HowToPlayDetail from "@/components/howToPlay";

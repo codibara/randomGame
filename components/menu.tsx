@@ -1,8 +1,5 @@
 import React from "react";
-import { useState } from "react";
 import { View, Text, ScrollView, StyleSheet, TouchableOpacity} from "react-native";
-import {SafeAreaView, SafeAreaProvider} from 'react-native-safe-area-context';
-import { Link } from "expo-router";
 import { useRouter, usePathname } from "expo-router";
 import gameData from "@/assets/data/gameData.json";
 import { Ionicons } from "@expo/vector-icons";
@@ -10,7 +7,6 @@ import { Ionicons } from "@expo/vector-icons";
 type MenuProps = {
     handler: () => void; // Function to toggle the menu
   };
-
 
 export default function Menu({ handler }: MenuProps){
     const games = gameData.games;
@@ -26,7 +22,7 @@ export default function Menu({ handler }: MenuProps){
                         <Ionicons
                             name="close-outline" 
                             size={24} 
-                            color="#E9E9E9"
+                            color="#010101"
                             onPress={handler}
                         />
                     </TouchableOpacity>
@@ -71,7 +67,7 @@ export default function Menu({ handler }: MenuProps){
                             router.push(`/settings`);
                           }}
                     >
-                        <Text style={styles.gameLink}>Settings</Text>
+                        <Text style={[styles.gameLink, {color:'#FF00A1'}]}>Settings</Text>
                     </TouchableOpacity>
                 </ScrollView>
             </View>
@@ -95,7 +91,7 @@ const styles = StyleSheet.create({
     menuTitle:{
         fontFamily: 'GmarketSansBold',
         flex: 1,
-        color: '#E9E9E9',
+        color: '#010101',
         textAlign: 'center',
         fontSize: 16,
     },
