@@ -228,6 +228,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     padding: 20,
     borderRadius: 16,
+    //for IOS start
+    shadowColor: '#000000', // Shadow color
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.25, 
+    shadowRadius: 4, 
+    //for IOS end
+    elevation: 8, // Elevation for Android
   },
   modalTitle: {
     fontFamily: "GmarketSansBold",

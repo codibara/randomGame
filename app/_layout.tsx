@@ -6,7 +6,7 @@ import {
 import { useFonts } from "expo-font";
 import { router, Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef} from "react";
 import {
   View,
   StyleSheet,
@@ -14,6 +14,7 @@ import {
   Image,
   Animated,
   TouchableWithoutFeedback,
+  Share,
 } from "react-native";
 import { useColorScheme } from "@/hooks/useColorScheme";
 import { Ionicons } from "@expo/vector-icons";
@@ -84,6 +85,32 @@ export default function RootLayout() {
       </View>
     );
   }
+
+  //share playstore link (will be added to the share icon)
+  const handleShare = async () => {
+    try {
+      const appLink = "https://play.google.com/store/apps/details?id=com.trello"; // Will be eplace with App Store or Play Store URL
+
+      const result = await Share.share({
+        title: "Download Our App",
+        message: `Check out this amazing app! Download it here: ${appLink}`,
+      });
+
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+          console.log("Shared with activity type:", result.activityType);
+        } else {
+          console.log("Shared successfully");
+        }
+      } else if (result.action === Share.dismissedAction) {
+        console.log("Share dismissed");
+      }
+    } catch (error) {
+      console.error("Error sharing app link:", error);
+    }
+  };
+
+
 
   return (
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
