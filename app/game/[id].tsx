@@ -3,7 +3,6 @@ import { View, Text, StyleSheet, ScrollView, ImageBackground } from "react-nativ
 import gameData from "@/assets/data/gameData.json";
 import GameDetail from "@/components/gameDetail";
 import HowToPlayDetail from "@/components/howToPlay";
-import VideoCard from "@/components/videoCard";
 
 export default function GameScreen() {
   const { id } = useLocalSearchParams();
@@ -28,7 +27,6 @@ export default function GameScreen() {
           source={require("@/assets/images/logo-pattern.png")}
         >
           <HowToPlayDetail howToPlay={game.HowToPlay}/>
-          <VideoCard link={game.SeeItInAction}/>
         </ImageBackground>
       </ScrollView>
   );

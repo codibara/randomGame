@@ -3,6 +3,7 @@ import { View, Text, ScrollView, StyleSheet, TouchableOpacity} from "react-nativ
 import { useRouter, usePathname } from "expo-router";
 import gameData from "@/assets/data/gameData.json";
 import { Ionicons } from "@expo/vector-icons";
+import { MenuItemButton } from "./ui/menuItembutton";
 
 type MenuProps = {
     handler: () => void; // Function to toggle the menu
@@ -28,57 +29,35 @@ export default function Menu({ handler }: MenuProps){
                     </TouchableOpacity>
                 </View>
                 <ScrollView style={styles.menuItemWrapper}>
-                    <TouchableOpacity 
-                        style={[
-                            styles.menuItem,
-                            pathname === `/` && styles.activeMenuItem,
-                          ]}
-                        onPress={() => {
-                            handler();
-                            router.push(`/`);
-                          }}
-                    >
-                        <Text style={[
-                            styles.gameLink,
-                            pathname === `/` && styles.activeGameLink,
-                        ]}>Main Page</Text>
-                    </TouchableOpacity>
-                    {games.map((game, index) => {
-                        return (
-                            <TouchableOpacity 
-                                key={index} 
-                                style={[
-                                    styles.menuItem,
-                                    pathname === `/game/${game.id}` && styles.activeMenuItem,
-                                  ]}
-                                onPress={() => {
-                                    handler();
-                                    router.push(`/game/${game.id}`);
-                                  }}
-                            >
-                                    <Text style={[
-                                        styles.gameLink,
-                                        pathname === `/game/${game.id}` && styles.activeGameLink,
-                                        ]}>{game.EngName}</Text>
-                            </TouchableOpacity>
-                        );
-                    })}
-                    <TouchableOpacity 
-                        style={[
-                            styles.menuItem,
-                            pathname === `/settings` && styles.activeMenuItem,
-                          ]}
+                    <MenuItemButton
+                            label="Main Page"
+                            iconName="home"
+                            isActive={pathname === `/`}
+                            onPress={() => {
+                                handler();
+                                router.push(`/`);
+                            }}
+                        />
+                    <MenuItemButton
+                        label="Settings"
+                        iconName="settings"
+                        isActive={pathname === `/settings`}
                         onPress={() => {
                             handler();
                             router.push(`/settings`);
-                          }}
-                    >
-                        <Text style={[
-                            styles.gameLink, 
-                            {color:'#FF00A1'},
-                            pathname === `/settings` && styles.activeGameLink,
-                        ]}>Settings</Text>
-                    </TouchableOpacity>
+                        }}
+                    />
+                    {games.map((game, index) => (
+                        <MenuItemButton
+                            key={index}
+                            label={game.EngName}
+                            isActive={pathname === `/game/${game.id}`}
+                            onPress={() => {
+                                handler();
+                                router.push(`/game/${game.id}`);
+                            }}
+                        />
+                    ))}
                 </ScrollView>
             </View>
         </View>
@@ -108,22 +87,5 @@ const styles = StyleSheet.create({
     },
     menuItemWrapper:{
         paddingVertical: 6,
-    },
-    menuItem:{
-        flex:1,
-        paddingVertical: 14,
-        backgroundColor: '#010101',
-    },
-    activeMenuItem: {
-        backgroundColor: "#57BEF7", 
-    },
-    gameLink: {
-        fontFamily: 'GmarketSansMedium',
-        fontSize: 16,
-        color: '#E9E9E9',
-        textAlign: 'center',
-    },
-    activeGameLink: {
-        color: '#101010',
     },
   });

@@ -4,8 +4,8 @@ import { StyleSheet } from "react-native";
 const GlobalStyles = StyleSheet.create({
     primaryBtnWrapper:{
         flexDirection: 'row',
-        alignItems: "center", // Center items vertically
-        justifyContent: "center", // Center items horizontally (optional)
+        alignItems: "center", 
+        justifyContent: "center", 
     },
     primaryBtnActive:{
         width: '100%',
