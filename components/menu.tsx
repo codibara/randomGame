@@ -17,7 +17,7 @@ export default function Menu({ handler }: MenuProps){
         <View style={styles.menuContainer}>
             <View>
                 <View style={styles.menuHeader}>
-                    <Text style={styles.menuTitle}>Jenna’s Fav Game</Text>
+                    <Text style={styles.menuTitle}>GAME LIST</Text>
                     <TouchableOpacity onPress={handler}>
                         <Ionicons
                             name="close-outline" 
@@ -38,7 +38,10 @@ export default function Menu({ handler }: MenuProps){
                             router.push(`/`);
                           }}
                     >
-                        <Text style={styles.gameLink}>Main Page</Text>
+                        <Text style={[
+                            styles.gameLink,
+                            pathname === `/` && styles.activeGameLink,
+                        ]}>Main Page</Text>
                     </TouchableOpacity>
                     {games.map((game, index) => {
                         return (
@@ -53,7 +56,10 @@ export default function Menu({ handler }: MenuProps){
                                     router.push(`/game/${game.id}`);
                                   }}
                             >
-                                    <Text style={styles.gameLink}>{game.EngName}</Text>
+                                    <Text style={[
+                                        styles.gameLink,
+                                        pathname === `/game/${game.id}` && styles.activeGameLink,
+                                        ]}>{game.EngName}</Text>
                             </TouchableOpacity>
                         );
                     })}
@@ -67,7 +73,11 @@ export default function Menu({ handler }: MenuProps){
                             router.push(`/settings`);
                           }}
                     >
-                        <Text style={[styles.gameLink, {color:'#FF00A1'}]}>Settings</Text>
+                        <Text style={[
+                            styles.gameLink, 
+                            {color:'#FF00A1'},
+                            pathname === `/settings` && styles.activeGameLink,
+                        ]}>Settings</Text>
                     </TouchableOpacity>
                 </ScrollView>
             </View>
@@ -94,6 +104,7 @@ const styles = StyleSheet.create({
         color: '#010101',
         textAlign: 'center',
         fontSize: 16,
+        lineHeight: 16,
     },
     menuItemWrapper:{
         paddingVertical: 6,
@@ -111,5 +122,8 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: '#E9E9E9',
         textAlign: 'center',
+    },
+    activeGameLink: {
+        color: '#101010',
     },
   });
