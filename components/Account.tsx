@@ -1,83 +1,74 @@
-import { useState, useEffect } from "react";
+import React, { useState } from "react";
+import { Alert, StyleSheet, View, AppState } from "react-native";
 import { supabase } from "../lib/supabase";
-import { StyleSheet, View, Alert } from "react-native";
 import { Button, Input } from "@rneui/themed";
-import { Session } from "@supabase/supabase-js";
 
-export default function Account({
-  session,
-  onUsernameFetch,
-}: {
-  session: Session;
-  onUsernameFetch: (username: string) => void;
-}) {
-  const [loading, setLoading] = useState(true);
-  const [username, setUsername] = useState("");
-  const [avatarUrl, setAvatarUrl] = useState("");
-
-  useEffect(() => {
-    if (session) getProfile();
-  }, [session]);
-
-  async function getProfile() {
-    try {
-      setLoading(true);
-      if (!session?.user) throw new Error("No user on the session!");
-
-      const { data, error, status } = await supabase
-        .from("profiles")
-        .select(`username, avatar_url`)
-        .eq("id", session?.user.id)
-        .single();
-
-      if (error && status !== 406) {
-        throw error;
-      }
-
-      if (data) {
-        setUsername(data.username);
-        setAvatarUrl(data.avatar_url);
-        onUsernameFetch(data.username);
-      }
-    } catch (error) {
-      if (error instanceof Error) {
-        Alert.alert("Error", error.message);
-      }
-    } finally {
-      setLoading(false);
-    }
+// Automatically refresh Supabase session in the foreground
+AppState.addEventListener("change", (state) => {
+  if (state === "active") {
+    supabase.auth.startAutoRefresh();
+  } else {
+    supabase.auth.stopAutoRefresh();
   }
+});
 
- 
-  async function updateProfile({
-    username,
-    avatar_url,
-  }: {
-    username: string;
-    avatar_url: string;
-  }) {
+export default function Auth() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  // Sign in or Sign up with email
+  async function handleSignIn() {
+    setLoading(true);
     try {
-      setLoading(true);
-      if (!session?.user) throw new Error("No user on the session!");
-
-      const updates = {
-        id: session?.user.id,
-        username,
-        avatar_url,
-        updated_at: new Date(),
-      };
-
-      const { error } = await supabase.from("profiles").upsert(updates);
+      // Try to sign in with existing credentials
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email: email,
+        password: password,
+      });
 
       if (error) {
-        throw error;
-      }
+        if (error.message.includes("Invalid login credentials")) {
+          // If login fails, attempt to sign up
+          const { data: signUpData, error: signUpError } =
+            await supabase.auth.signUp({
+              email: email,
+              password: password,
+            });
 
-      Alert.alert("Success", "Profile updated successfully!");
-    } catch (error) {
-      if (error instanceof Error) {
-        Alert.alert("Error", error.message);
+          if (signUpError) throw signUpError;
+
+          if (signUpData?.user) {
+            const userId = signUpData.user.id;
+            const userEmail = signUpData.user.email || email;
+
+            // Upsert user profile in Supabase profiles table
+            const { error: insertError } = await supabase
+              .from("profiles")
+              .upsert([
+                {
+                  id: userId,
+                  email: userEmail,
+                  username: userEmail, // Default username to email
+                  updated_at: new Date(),
+                },
+              ]);
+
+            if (insertError) throw insertError;
+
+            Alert.alert(
+              "Success",
+              "Account created successfully! You are now signed in."
+            );
+          }
+        } else {
+          throw error;
+        }
+      } else {
+        Alert.alert("Success", "Logged in successfully!");
       }
+    } catch (error) {
+      Alert.alert("Error", (error as Error).message || "Login failed.");
     } finally {
       setLoading(false);
     }
@@ -86,27 +77,32 @@ export default function Account({
   return (
     <View style={styles.container}>
       <View style={[styles.verticallySpaced, styles.mt20]}>
-        <Input label="Email" value={session?.user?.email} disabled />
+        <Input
+          label="Email"
+          leftIcon={{ type: "font-awesome", name: "envelope" }}
+          onChangeText={(text) => setEmail(text)}
+          value={email}
+          placeholder="email@address.com"
+          autoCapitalize={"none"}
+        />
       </View>
-
       <View style={styles.verticallySpaced}>
         <Input
-          label="Username"
-          value={username || ""}
-          onChangeText={(text) => setUsername(text)}
+          label="Password"
+          leftIcon={{ type: "font-awesome", name: "lock" }}
+          onChangeText={(text) => setPassword(text)}
+          value={password}
+          secureTextEntry={true}
+          placeholder="Password"
+          autoCapitalize={"none"}
         />
       </View>
-
       <View style={[styles.verticallySpaced, styles.mt20]}>
         <Button
-          title={loading ? "Loading ..." : "Update"}
-          onPress={() => updateProfile({ username, avatar_url: avatarUrl })}
+          title={loading ? "Loading..." : "Sign In / Sign Up"}
           disabled={loading}
+          onPress={() => handleSignIn()}
         />
-      </View>
-
-      <View style={styles.verticallySpaced}>
-        <Button title="Sign Out" onPress={() => supabase.auth.signOut()} />
       </View>
     </View>
   );

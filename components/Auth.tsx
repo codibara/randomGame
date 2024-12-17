@@ -3,10 +3,7 @@ import { Alert, StyleSheet, View, AppState } from "react-native";
 import { supabase } from "../lib/supabase";
 import { Button, Input } from "@rneui/themed";
 
-// Tells Supabase Auth to continuously refresh the session automatically if
-// the app is in the foreground. When this is added, you will continue to receive
-// `onAuthStateChange` events with the `TOKEN_REFRESHED` or `SIGNED_OUT` event
-// if the user's session is terminated. This should only be registered once.
+// Automatically refresh Supabase session in the foreground
 AppState.addEventListener("change", (state) => {
   if (state === "active") {
     supabase.auth.startAutoRefresh();
@@ -20,31 +17,71 @@ export default function Auth() {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
+  // Sign in with email
   async function signInWithEmail() {
     setLoading(true);
-    const { error } = await supabase.auth.signInWithPassword({
-      email: email,
-      password: password,
-    });
+    try {
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email: email,
+        password: password,
+      });
 
-    if (error) Alert.alert(error.message);
-    setLoading(false);
+      if (error) throw error;
+
+      // Optionally check if the user's email exists in the profiles table
+      const userId = data.user.id;
+      const { error: upsertError } = await supabase
+        .from("profiles")
+        .upsert([{ id: userId, email: email, updated_at: new Date() }]);
+
+      if (upsertError) throw upsertError;
+
+      Alert.alert("Success", "Logged in successfully!");
+    } catch (error) {
+      Alert.alert("Error", (error as Error).message);
+    } finally {
+      setLoading(false);
+    }
   }
 
+  // Sign up with email
   async function signUpWithEmail() {
     setLoading(true);
-    const {
-      data: { session },
-      error,
-    } = await supabase.auth.signUp({
-      email: email,
-      password: password,
-    });
+    try {
+      const { data, error } = await supabase.auth.signUp({
+        email: email,
+        password: password,
+      });
 
-    if (error) Alert.alert(error.message);
-    if (!session)
-      Alert.alert("Please check your inbox for email verification!");
-    setLoading(false);
+      if (error) throw error;
+
+      if (data?.user) {
+        const userId = data.user.id;
+
+        // Use the user's email as the default username
+        const userEmail = data.user.email || email;
+
+        // Upsert user email and username (default to email) into profiles table
+        const { error: insertError } = await supabase.from("profiles").upsert([
+          {
+            id: userId,
+            email: userEmail,
+            username: userEmail, // Default username as email
+            updated_at: new Date(),
+          },
+        ]);
+
+        if (insertError) throw insertError;
+
+        Alert.alert("Success", "Signup successful!");
+      } else {
+        Alert.alert("Error", "Signup failed. No user returned.");
+      }
+    } catch (error) {
+      Alert.alert("Error", (error as Error).message || "Signup failed.");
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (

@@ -76,13 +76,9 @@ export default function HomeScreen() {
 
           {isProfileComplete && (
             <View style={styles.mainContent}>
-              <Main />
+              <Main username={username || "User"} />
             </View>
           )}
-
-          <View style={styles.signOutContainer}>
-            <Button title="Sign Out" onPress={handleSignOut} />
-          </View>
         </>
       ) : (
         <View style={styles.authContainer}>
