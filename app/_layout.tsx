@@ -79,7 +79,7 @@ export default function RootLayout() {
     return (
       <View style={styles.splashContainer}>
         <Image
-          source={require("@/assets/images/Screenshot.png")}
+          source={require("@/assets/images/splashLogo.png")}
           style={styles.logo}
         />
       </View>
@@ -135,12 +135,13 @@ export default function RootLayout() {
           {/* Navigation */}
           <Stack
             screenOptions={{
-              headerStyle: { backgroundColor: 'transparent' },
+              headerStyle: { backgroundColor: '#E9E9E9' },
+              //headerStyle: { backgroundColor: 'transparent' },
             }}
           >
             <Stack.Screen 
               name="index" 
-              options={{ 
+              options={{
                 headerTitle: "",
                 headerTransparent: true,
                 headerBackVisible: false,
@@ -150,6 +151,7 @@ export default function RootLayout() {
                     size={24} 
                     color="#000"
                     onPress={toggleMenu}
+                    // style={{backgroundColor: '#ffffff', padding: 8, borderRadius: 30, borderWidth: 1, borderColor: "#FF00A1"}}
                   />
                 ),
                 headerRight: () => (
@@ -174,6 +176,7 @@ export default function RootLayout() {
                     size={24} 
                     color="#000"
                     onPress={toggleMenu}
+                    // style={{backgroundColor: '#ffffff', padding: 8, borderRadius: 30, borderWidth: 1, borderColor: "#FF00A1"}}
                   />
                 ),
                 headerRight: () => (
@@ -219,11 +222,11 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#FFFFFF",
+    backgroundColor: "#010101",
   },
   logo: {
-    width: 200,
-    height: 200,
+    width: screenWidth,
+    aspectRatio: 1/1,
     resizeMode: "contain",
   },
   drawer: {

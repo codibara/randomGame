@@ -15,10 +15,10 @@ const RADIUS_MAX = width * 1.3; // Max distance from the center
 const CENTER_OFFSET_Y = -height * 0.2;
 
 const cards = [
-    require('@/assets/images/card1.png'),
-    require('@/assets/images/card2.png'),
-    require('@/assets/images/card3.png'),
-    require('@/assets/images/card4.png'),
+    require('@/assets/images/cardBack1.png'),
+    require('@/assets/images/cardBack2.png'),
+    require('@/assets/images/cardBack3.png'),
+    require('@/assets/images/cardBack4.png'),
 ];
 
 export default function MainCardAnimation(){

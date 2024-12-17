@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'center',
+        //justifyContent: 'center',
         padding: 14,
         backgroundColor: '#010101',
     },
@@ -59,7 +59,6 @@ const styles = StyleSheet.create({
         fontFamily: 'GmarketSansMedium',
         fontSize: 16,
         color: '#E9E9E9',
-        textAlign: 'center',
     },
     activeMenuLink: {
         color: '#101010',

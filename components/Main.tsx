@@ -76,9 +76,9 @@ export default function Main() {
           >
             <View style={styles.modalOverlay}>
               <ImageBackground 
-                source={require("@/assets/images/excardbackimg.png")}
+                source={require("@/assets/images/card_front.png")}
                 style={styles.modalContent}
-                imageStyle={{ borderRadius: 16,}}
+                imageStyle={{ borderRadius: 28,}}
               >
                 <View style={styles.closeButtonWrapper}>
                   <TouchableOpacity
@@ -167,7 +167,7 @@ const styles = StyleSheet.create({
     marginTop: height * 0.25,
     backgroundColor: '#fff',
     padding: 20,
-    borderRadius: 16,
+    borderRadius: 28,
     //for IOS start
     shadowColor: '#000000',
     shadowOffset: { width: 0, height: 4 },
