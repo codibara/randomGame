@@ -1,3 +1,4 @@
+import React from "react";
 import { useLocalSearchParams } from "expo-router";
 import { View, Text, StyleSheet, ScrollView, ImageBackground } from "react-native";
 import gameData from "@/assets/data/gameData.json";

@@ -2,6 +2,8 @@ import React from "react";
 import { View, Text, StyleSheet, ImageBackground } from "react-native";
 import { Game  } from "../types";
 
+import AttributeCard from "./attributeCard";
+
 interface GameDetailProps {
   game: Game;
 }
@@ -14,23 +16,14 @@ export default function GameDetail({ game }: GameDetailProps) {
         source={require("@/assets/images/torn-paper.png")}
       >
         <Text style={styles.korTitle}>{game.KorName}</Text>
-        <Text style={styles.pronounceText}>{'[' + game.Pronounce + ']'}</Text>
         <Text style={styles.engTitle} >{game.EngName}</Text>
       </ImageBackground>
-      
       <View style={styles.attributeWrapper}>
-        {Object.entries(game.Attributes).map(([key, value]) => (
-          <ImageBackground 
-            key={key} 
-            source={require("@/assets/images/attributeBgImg.png")}
-            style={styles.attributeContainer}
-            imageStyle={{ borderRadius: 12, resizeMode: 'cover', width: 'auto', height: 'auto'}}
-          >
-            <Text style={styles.attributeHeading}>{key}</Text>
-            <Text>{value}</Text>
-          </ImageBackground>
-        ))}      
-        </View>
+        <AttributeCard heading="Difficulty" value={game.Attributes.Difficulty} emoji= {"😵‍💫"} isEmoji={true} />
+        <AttributeCard heading="NoiseLevel" value={game.Attributes.NoiseLevel} emoji= {"🔊"} isEmoji={true} />
+        <AttributeCard heading="RiskLevel" value={game.Attributes.RiskLevel} emoji= {"🍺"} isEmoji={true} />
+        <AttributeCard heading="Required" value={game.Attributes.Required} isEmoji={false} />
+      </View>
         <ImageBackground 
           source={require("@/assets/images/torn-line.png")}
           style={styles.divider}
@@ -68,9 +61,6 @@ const styles = StyleSheet.create({
     fontSize: 40,
     textTransform: "uppercase",
   },
-  attributeHeading: {
-    fontFamily: "GmarketSansMedium",
-  },
   attributeWrapper: {
     flex: 1,
     display: "flex",
@@ -79,15 +69,6 @@ const styles = StyleSheet.create({
     gap: 12,
     paddingHorizontal: 20,
     paddingBottom: 50,
-  },
-  attributeContainer: {
-    width: "48%",
-    height: 100,
-    backgroundColor: "#ffffff",
-    borderRadius: 4,
-    padding: 12,
-    borderWidth:1,
-    borderColor: '#D9D9D9',
   },
   divider: {
     position: 'absolute',

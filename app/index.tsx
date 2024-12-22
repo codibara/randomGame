@@ -4,8 +4,7 @@ import { supabase } from "../lib/supabase";
 import Auth from "../components/Auth";
 import { Session } from "@supabase/supabase-js";
 import Main from "@/components/Main";
-import { Text, StyleSheet, View, Button } from "react-native";
-import Settings from "./settings";
+import { Text, StyleSheet, View,} from "react-native";
 
 export default function HomeScreen() {
   const [session, setSession] = useState<Session | null>(null);
@@ -56,8 +55,6 @@ export default function HomeScreen() {
     <View style={styles.container}>
       {session && session.user ? (
         <>
-          <Text style={styles.username}>Welcome, {username || "User"}!</Text>
-
           {!isProfileComplete && (
             <View style={styles.content}>
               <Auth onUsernameFetch={setUsername} />
@@ -83,7 +80,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    padding: 20,
   },
   authContainer: {
     flex: 1,
@@ -104,10 +100,6 @@ const styles = StyleSheet.create({
   },
   title: {
     marginBottom: 20,
-  },
-  list: {
-    fontSize: 20,
-    fontWeight: "bold",
   },
   username: {
     fontSize: 20,

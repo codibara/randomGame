@@ -1,3 +1,4 @@
+import React from "react";
 import {
   DarkTheme,
   DefaultTheme,
@@ -18,6 +19,8 @@ import {
 } from "react-native";
 import { useColorScheme } from "@/hooks/useColorScheme";
 import { Ionicons } from "@expo/vector-icons";
+import { supabase } from "@/lib/supabase";
+import { Session } from "@supabase/supabase-js";
 import Menu from "@/components/menu";
 
 const screenWidth = Dimensions.get("window").width;
@@ -37,6 +40,50 @@ export default function RootLayout() {
   const [showSplash, setShowSplash] = useState(true);
   const [menuVisible, setMenuVisible] = useState(false);
   const menuAnimation = useRef(new Animated.Value(-screenWidth)).current;
+
+  const [session, setSession] = useState<Session | null>(null);
+  const [username, setUsername] = useState<string | null>(null);
+  const [isProfileComplete, setIsProfileComplete] = useState<boolean>(false);
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
+      if (session) {
+        getProfile(session.user.id);
+      }
+    });
+
+    supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
+      if (session) {
+        getProfile(session.user.id);
+      }
+    });
+  }, []);
+
+  async function getProfile(userId: string) {
+    try {
+      const { data, error, status } = await supabase
+        .from("profiles")
+        .select(`username, avatar_url`)
+        .eq("id", userId)
+        .single();
+
+      if (error && status !== 406) {
+        throw error;
+      }
+
+      if (data) {
+        setUsername(data.username);
+        //console.log("Username:", data.username);
+        setIsProfileComplete(true);
+      }
+    } catch (error) {
+      if (error instanceof Error) {
+        console.error("Error fetching user profile:", error.message);
+      }
+    }
+  }
 
   //Drawer Manu Toogle Handler
   const toggleMenu = () => {
@@ -135,13 +182,14 @@ export default function RootLayout() {
           {/* Navigation */}
           <Stack
             screenOptions={{
-              headerStyle: { backgroundColor: '#E9E9E9' },
-              //headerStyle: { backgroundColor: 'transparent' },
+              //headerStyle: { backgroundColor: '#E9E9E9' },
+              headerStyle: { backgroundColor: 'transparent' },
             }}
           >
             <Stack.Screen 
               name="index" 
               options={{
+                headerShown: !!session, 
                 headerTitle: "",
                 headerTransparent: true,
                 headerBackVisible: false,
@@ -151,7 +199,7 @@ export default function RootLayout() {
                     size={24} 
                     color="#000"
                     onPress={toggleMenu}
-                    // style={{backgroundColor: '#ffffff', padding: 8, borderRadius: 30, borderWidth: 1, borderColor: "#FF00A1"}}
+                    style={{backgroundColor: '#ffffff', padding: 8, borderRadius: 30, borderWidth: 1, borderColor: "#FF00A1"}}
                   />
                 ),
                 headerRight: () => (
@@ -159,7 +207,7 @@ export default function RootLayout() {
                     name="share-social-outline" 
                     size={24} 
                     color="#000"
-                    onPress={()=>router.push('/login')}
+                    onPress={handleShare}
                   />
                 )
               }}
@@ -176,7 +224,6 @@ export default function RootLayout() {
                     size={24} 
                     color="#000"
                     onPress={toggleMenu}
-                    // style={{backgroundColor: '#ffffff', padding: 8, borderRadius: 30, borderWidth: 1, borderColor: "#FF00A1"}}
                   />
                 ),
                 headerRight: () => (
@@ -184,6 +231,7 @@ export default function RootLayout() {
                     name="share-social-outline" 
                     size={24} 
                     color="#000"
+                    onPress={handleShare}
                   />
                 )
               }}
@@ -202,15 +250,26 @@ export default function RootLayout() {
                     color="#000"
                     onPress={toggleMenu}
                   />
-                )
+                ),
+                headerRight: () => (
+                  <Ionicons
+                    name="log-out-outline"
+                    size={24}
+                    color="#000"
+                    onPress={async () => {
+                      try {
+                        const { error } = await supabase.auth.signOut();
+                        if (error) throw error;
+                        router.push("/");
+                      } catch (error) {
+                        console.error("Error logging out:", error);
+                      }
+                    }}
+                    style={{ marginRight: 10 }}
+                  />
+                ),
               }}
             />
-            <Stack.Screen 
-                name="login"
-                options={{ 
-                  headerShown: false,
-                }}
-              />
           </Stack>
         </View>
     </ThemeProvider>

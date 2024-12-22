@@ -9,10 +9,12 @@ import {
   KeyboardAvoidingView,
   ScrollView,
   Platform,
+  TextInput,
 } from "react-native";
 import { supabase } from "../lib/supabase";
-import { Button, Input } from "@rneui/themed";
-import { useRouter } from "expo-router"; // Import useRouter for navigation
+import { useRouter } from "expo-router"; 
+
+import CustomButton from "./ui/button";
 
 const { width, height } = Dimensions.get("window");
 
@@ -33,49 +35,19 @@ export default function Auth({ onUsernameFetch }: AuthProps) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [isFocused, setIsFocused] = useState(false);
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const isButtonDisabled = email.trim() === "" || password.trim() === "";
   const router = useRouter(); // Initialize useRouter
-
-  // Sign in with email
-  async function signInWithEmail() {
-    setLoading(true);
-    try {
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email: email,
-        password: password,
-      });
-
-      if (error) throw error;
-
-      const userId = data.user?.id;
-
-      if (!userId) throw new Error("User not found");
-
-      // Fetch the user's username
-      const { data: profile, error: profileError } = await supabase
-        .from("profiles")
-        .select("username")
-        .eq("id", userId)
-        .single();
-
-      if (profileError) throw profileError;
-
-      if (profile?.username) {
-        onUsernameFetch(profile.username); // Update the username in the parent
-      }
-      console.log("Username:", profile.username);
-
-      // Navigate to the Settings screen
-      router.push("/settings");
-    } catch (error) {
-      console.log("Error:", error);
-    } finally {
-      setLoading(false);
-    }
-  }
 
   // Sign up with email
   async function signUpWithEmail() {
+    if (!validateInputs()) return;
+
     setLoading(true);
+
+
     try {
       const { data, error } = await supabase.auth.signUp({
         email: email,
@@ -105,7 +77,7 @@ export default function Auth({ onUsernameFetch }: AuthProps) {
         if (insertError) throw insertError;
 
         onUsernameFetch(userEmail); // Update the username in the parent
-        console.log("Username:", userEmail);
+        //console.log("Username:", userEmail);
 
         // Navigate to the Settings screen
         router.push("/settings");
@@ -114,9 +86,42 @@ export default function Auth({ onUsernameFetch }: AuthProps) {
       }
     } catch (error) {
       console.log("Error:", error);
+      if (error instanceof Error) {
+        alert(error.message);
+      } else {
+        alert("An unexpected error occurred.");
+      }
     } finally {
       setLoading(false);
     }
+  }
+
+  function validateInputs() {
+    let valid = true;
+  
+    // Reset error messages
+    setEmailError("");
+    setPasswordError("");
+  
+    // Validate email
+    if (!email.trim()) {
+      setEmailError("Email is required.");
+      valid = false;
+    } else if (!/^\S+@\S+\.\S+$/.test(email)) {
+      setEmailError("Please enter a valid email address.");
+      valid = false;
+    }
+  
+    // Validate password
+    if (!password.trim()) {
+      setPasswordError("Password is required.");
+      valid = false;
+    } else if (password.length < 6) {
+      setPasswordError("Password must be at least 6 characters.");
+      valid = false;
+    }
+  
+    return valid;
   }
 
   return (
@@ -124,89 +129,142 @@ export default function Auth({ onUsernameFetch }: AuthProps) {
       style={styles.container}
       source={require("@/assets/images/Paper_texture.png")}
     >
-      <KeyboardAvoidingView
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
-        style={styles.keyboardAvoidingView}
-      >
-        <ScrollView
-          contentContainerStyle={styles.scrollViewContent}
-          keyboardShouldPersistTaps="handled"
-        >
-          <View style={styles.container}>
-            <View style={styles.mainTitleWrapper}>
-              <Text style={styles.appText1}>________'s FAV</Text>
-              <Text style={styles.appText2}>Random Game</Text>
-            </View>
-            <View style={[styles.verticallySpaced, styles.mt20]}>
-              <Input
-                label="Email"
-                leftIcon={{ type: "font-awesome", name: "envelope" }}
-                onChangeText={(text) => setEmail(text)}
-                value={email}
-                placeholder="email@address.com"
-                autoCapitalize={"none"}
-              />
-            </View>
-            <View style={styles.verticallySpaced}>
-              <Input
-                label="Password"
-                leftIcon={{ type: "font-awesome", name: "lock" }}
-                onChangeText={(text) => setPassword(text)}
-                value={password}
-                secureTextEntry={true}
-                placeholder="Password"
-                autoCapitalize={"none"}
-              />
-            </View>
-            <View style={styles.verticallySpaced}>
-              <Button
-                title="Sign up / Sign in"
-                disabled={loading}
-                onPress={() => signUpWithEmail()}
-              />
-            </View>
+      <ImageBackground 
+        style={[styles.decoImg, styles.decoTopPosition]}
+        source={require("@/assets/images/doodle.png")}
+      />
+      <ImageBackground 
+        style={[styles.decoImg, styles.decoCenterPosition]}
+        source={require("@/assets/images/doodle2.png")}
+      />
+      <ImageBackground 
+        style={[styles.decoImg, styles.decoBottomPosition]}
+        source={require("@/assets/images/doodle.png")}
+      />
+      <View style={styles.mainWrapper}>
+        <View style={styles.mainTitleWrapper}>
+          <Text style={styles.appText1}>________'s FAV</Text>
+          <Text style={styles.appText2}>Random</Text>
+          <Text style={styles.appText2}>Game</Text>
+        </View>
+        <View style={styles.loginFormWrapper}>
+          <View style={styles.inputWrapper}>
+            <Text style={styles.inputLable}>Email</Text>
+            <TextInput
+              style={[
+                styles.input,
+                isFocused ? styles.inputFocused : styles.input,
+              ]}
+              onChangeText={(text) => setEmail(text)}
+              value={email}
+              placeholder="youremail@email.com"
+              autoCapitalize={"none"}
+              onFocus={() => setIsFocused(true)}
+              onBlur={() => setIsFocused(false)}
+            />
+            {emailError ? <Text style={styles.errorText}>{emailError}</Text> : null}
           </View>
-        </ScrollView>
-      </KeyboardAvoidingView>
+          <View style={styles.inputWrapper}>
+            <Text style={styles.inputLable}>Password</Text>
+            <TextInput
+              style={[
+                styles.input,
+                isFocused ? styles.inputFocused : styles.input,
+              ]}
+              onChangeText={(text) => setPassword(text)}
+              value={password}
+              secureTextEntry={true}
+              placeholder="Minimum 6 characters"
+              autoCapitalize={"none"}
+              onFocus={() => setIsFocused(true)}
+              onBlur={() => setIsFocused(false)}
+            />
+            {passwordError ? <Text style={styles.errorText}>{passwordError}</Text> : null}
+          </View>
+        </View>
+        <View>
+          <CustomButton
+            text={"Sign up / Sign in"}
+            onPress={() => signUpWithEmail()}
+            isDisabled={loading}
+          />
+        </View>
+      </View>
     </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
+    width: width,
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
     paddingVertical: 50,
   },
-  keyboardAvoidingView: {
-    flex: 1,
-  },
-  scrollViewContent: {
-    flexGrow: 1,
-  },
-  verticallySpaced: {
-    paddingTop: 4,
-    paddingBottom: 4,
-    alignSelf: "stretch",
-  },
-  mt20: {
-    marginTop: 20,
+  mainWrapper:{
+    width: width * 0.8,
+    maxWidth: 450,
   },
   mainTitleWrapper: {
-    width: width * 0.9,
-    marginTop: height * 0.3,
-    maxWidth: 450,
+    marginBottom: 36,
+  },
+  loginFormWrapper:{
+    marginBottom: 50,
   },
   appText1: {
     fontFamily: "HakgyoansimBold600",
-    fontSize: 32,
-    textTransform: "uppercase",
+    fontSize: 28,
+    textAlign: 'center',
+    marginBottom: 40,
   },
   appText2: {
     fontFamily: "HakgyoansimBold600",
-    fontSize: 40,
-    marginBottom: 30,
+    fontSize: 60,
     textTransform: "uppercase",
+    textAlign: 'center',
+  },
+  inputWrapper:{
+    marginBottom: 20,
+  },
+  inputLable:{
+    fontFamily: "GmarketSansMedium",
+    fontSize: 12,
+    color: "#FF00A1",
+  },
+  input: {
+    fontFamily: "GmarketSansMedium",
+    height: 40,
+    borderBottomWidth: 1,
+    borderColor: "#848484",
+    paddingVertical: 10,
+    textDecorationLine: "none",
+  },
+  inputFocused: {
+    backgroundColor: "#D9D9D9",
+  },
+  decoImg:{
+    width: width * 0.6,
+    aspectRatio: 1/1,
+    position: 'absolute',
+  },
+  decoTopPosition:{
+    top: -60,
+    left: -100,
+  },
+  decoCenterPosition:{
+    top: height * 0.4,
+    right: -70,
+    transform: [{ rotate: '80deg' }]
+  },
+  decoBottomPosition:{
+    bottom: -80,
+    left: 0,
+  },
+  errorText: {
+    fontSize: 10,
+    color: "#57BEF7",
+    marginTop: 4,
+    fontFamily: "GmarketSansMedium",
   },
 });

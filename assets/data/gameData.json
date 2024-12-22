@@ -1,176 +1,156 @@
 {
-    "games": [
-      {
-        "id": 1,
-        "EngName": "The Bottle Cap Game",
-        "KorName": "병뚜껑 게임",
-        "Pronounce": "Byeong-ttuk-keong Ge-im",
-        "Attributes": {
-          "Difficulty": "Low",
-          "NoiseLevel": "Medium",
-          "RiskLevel": "Low",
-          "Required": "Soju bottle cap"
-        },
-        "HowToPlay": {
-          "step01": "After opening a soju bottle, twist the loose metal strip under the cap into a long strand.",
-          "step02": "Players take turns flicking this strand.",
-          "step03": "The player who successfully breaks it off chooses someone to drink."
-        },
-        "SeeItInAction": [
-          "https://youtu.be/Mpua2UPzb9M?si=VpjZfZesgVkoeL3Q"
-        ]
+  "games": [
+    {
+      "id": 1,
+      "EngName": "APT",
+      "KorName": "아파트",
+      "Pronounce": "Byeong-ttuk-keong Ge-im",
+      "Attributes": {
+        "Difficulty": 1,
+        "NoiseLevel": 2,
+        "RiskLevel": 1,
+        "Required": "None"
       },
-      {
-        "id": 2,
-        "EngName": "Up and Down",
-        "KorName": "업다운",
-        "Pronounce": "Eop-da-un",
-        "Attributes": {
-          "Difficulty": "Medium",
-          "NoiseLevel": "Medium",
-          "RiskLevel": "Low",
-          "Required": "Soju bottle cap with hidden number"
-        },
-        "HowToPlay": {
-          "step01": "One player looks at the hidden number under the soju bottle cap.",
-          "step02": "Other players take turns guessing the number between 1 and 50.",
-          "step03": "After each guess, the player with the cap indicates if the actual number is higher ('Up') or lower ('Down') than the guess.",
-          "step04": "The player who guesses the correct number chooses someone to drink."
-        },
-        "SeeItInAction": [
-          "https://www.youtube.com/watch?v=0f7d5VRhLls"
-        ]
+      "HowToPlay": {
+        "step01": "At least two people are needed to play the game, but it becomes more fun with more players.",
+        "step02": "Players form a circle and begin to chant “apateu” four times together.",
+        "step03": "As the chant is over, the starting player screams a number he/she likes and everyone rushes to stack their hands on top of each other at the center.",
+        "step04": "The player whose hand is at the bottom of the stack moves it to the top while screaming “one.” The next person does the same, counting “two,” and so on, until the number shouted at the beginning is reached. The person who moves the hand at the final number loses the game, and has to drink. They start the next round by calling a new number."
       },
-      {
-        "id": 3,
-        "EngName": "Titanic/The Submarine",
-        "KorName": "타이타닉/잠수함",
-        "Pronounce": "Ta-i-ta-nik/Jam-su-ham",
-        "Attributes": {
-          "Difficulty": "Medium",
-          "NoiseLevel": "Low",
-          "RiskLevel": "High",
-          "Required": "Beer glass, soju shot glass, beer, soju"
-        },
-        "HowToPlay": {
-          "step01": "Fill a large glass partially with beer and float a shot glass on top.",
-          "step02": "Players take turns pouring soju into the floating shot glass.",
-          "step03": "The player who causes the shot glass to sink drinks the mixture."
-        },
-        "SeeItInAction": [
-          "https://www.youtube.com/watch?v=0f7d5VRhLls"
-        ]
+      "SeeItInAction": [
+        "https://youtu.be/Mpua2UPzb9M?si=VpjZfZesgVkoeL3Q"
+      ]
+    },
+    {
+      "id": 2,
+      "EngName": "Up and Down",
+      "KorName": "업앤다운",
+      "Pronounce": "Eop-da-un",
+      "Attributes": {
+        "Difficulty": 2,
+        "NoiseLevel": 2,
+        "RiskLevel": 1,
+        "Required": "Soju bottle cap with hidden number"
       },
-      {
-        "id": 4,
-        "EngName": "3-6-9",
-        "KorName": "삼육구",
-        "Pronounce": "Sam-yuk-gu",
-        "Attributes": {
-          "Difficulty": "Medium",
-          "NoiseLevel": "High",
-          "RiskLevel": "Medium",
-          "Required": "None"
-        },
-        "HowToPlay": {
-          "step01": "Players take turns counting aloud in sequence.",
-          "step02": "For numbers containing or being multiples of 3, 6, or 9, the player must clap instead of speaking.",
-          "step03": "Mistakes result in taking a drink."
-        },
-        "SeeItInAction": [
-          "https://www.youtube.com/watch?v=0f7d5VRhLls"
-        ]
+      "HowToPlay": {
+        "step01": "One player looks at the hidden number under the soju bottle cap.",
+        "step02": "Other players take turns guessing the number between 1 and 50.",
+        "step03": "After each guess, the player with the cap indicates if the actual number is higher ('Up') or lower ('Down') than the guess.",
+        "step04": "The player who guesses the correct number chooses someone to drink."
       },
-      {
-        "id": 5,
-        "EngName": "Tap",
-        "KorName": "탭",
-        "Pronounce": "Taep",
-        "Attributes": {
-          "Difficulty": "Medium",
-          "NoiseLevel": "High",
-          "RiskLevel": "Medium",
-          "Required": "None"
-        },
-        "HowToPlay": {
-          "step01": "Players sit in a circle and establish a rhythm by tapping the table twice and then snapping their fingers.",
-          "step02": "On their turn, a player says their own number on the first snap and another player's number on the second snap.",
-          "step03": "The game continues with the player whose number was called. Mistakes or delays result in taking a drink."
-        },
-        "SeeItInAction": [
-          "https://www.youtube.com/watch?v=0f7d5VRhLls"
-        ]
+      "SeeItInAction": [
+        "https://www.youtube.com/watch?v=0f7d5VRhLls"
+      ]
+    },
+    {
+      "id": 3,
+      "EngName": "Titanic Game",
+      "KorName": "타이타닉",
+      "Pronounce": "Ta-i-ta-nik/Jam-su-ham",
+      "Attributes": {
+        "Difficulty": 2,
+        "NoiseLevel": 1,
+        "RiskLevel": 3,
+        "Required": "Beer glass, soju shot glass, beer, soju"
       },
-      {
-        "id": 6,
-        "EngName": "Baskin Robbins 31",
-        "KorName": "베스킨라빈스 31",
-        "Pronounce": "Be-seu-kin-ra-bin-seu 31",
-        "Attributes": {
-          "Difficulty": "Low",
-          "NoiseLevel": "Medium",
-          "RiskLevel": "Low",
-          "Required": "None"
-        },
-        "HowToPlay": {
-          "step01": "Players take turns saying one, two, or three consecutive numbers in sequence.",
-          "step02": "The goal is to avoid being the one to say '31'.",
-          "step03": "The player who says '31' must drink."
-        },
-        "SeeItInAction": [
-          "https://www.youtube.com/watch?v=0f7d5VRhLls"
-        ]
+      "HowToPlay": {
+        "step01": "Fill a large glass partially with beer and float a shot glass on top.",
+        "step02": "Players take turns pouring soju into the floating shot glass.",
+        "step03": "The player who causes the shot glass to sink drinks the mixture."
       },
-      {
-        "id": 7,
-        "EngName": "007",
-        "KorName": "007",
-        "Pronounce": "gong-gong-chil",
-        "Attributes": {
-          "Difficulty": "Medium",
-          "NoiseLevel": "High",
-          "RiskLevel": "Medium",
-          "Required": "None"
-        },
-        "HowToPlay": {
-          "step01": "Players sit in a circle. One player starts by pointing to another and says '0'.",
-          "step02": "The second player points to a third player and says '0', and the third player points to another and says '7'.",
-          "step03": "The player pointed at after '7' must say 'Bang' and point to another player, who then raises their hands.",
-          "step04": "Mistakes or delays result in taking a drink."
-        },
-        "SeeItInAction": [
-          "https://www.youtube.com/watch?v=0f7d5VRhLls"
-        ]
+      "SeeItInAction": [
+        "https://www.youtube.com/watch?v=0f7d5VRhLls"
+      ]
+    },
+    {
+      "id": 4,
+      "EngName": "3-6-9",
+      "KorName": "삼육구",
+      "Pronounce": "Sam-yuk-gu",
+      "Attributes": {
+        "Difficulty": 2,
+        "NoiseLevel": 3,
+        "RiskLevel": 2,
+        "Required": "None"
       },
-      {
-        "id": 8,
-        "EngName": "Rabbit",
-        "KorName": "토끼",
-        "Pronounce": "To-kki",
-        "Attributes": {
-          "Difficulty": "High",
-          "NoiseLevel": "High",
-          "RiskLevel": "High",
-          "Required": "None"
-        },
-        "HowToPlay": {
-          "step01": "Players sit in a circle. One player starts by saying 'Bunny Bunny' twice while making bunny ear gestures.",
-          "step02": "The players to the immediate left and right must say 'Dang-geun Dang-geun' (carrot) while making carrot-eating gestures.",
-          "step03": "The 'Bunny' player then points to another player, who becomes the new 'Bunny'. Mistakes or delays result in taking a drink."
-        },
-        "SeeItInAction": [
-          "https://www.youtube.com/watch?v=0f7d5VRhLls"
-        ]
+      "HowToPlay": {
+        "step01": "Players take turns counting aloud in sequence.",
+        "step02": "For numbers containing or being multiples of 3, 6, or 9, the player must clap instead of speaking.",
+        "step03": "Mistakes result in taking a drink."
       },
-      {
-        "id": 9,
+      "SeeItInAction": [
+        "https://www.youtube.com/watch?v=0f7d5VRhLls"
+      ]
+    },
+    {
+      "id": 5,
+      "EngName": "Baskin Robbins 31",
+      "KorName": "베스킨라빈스 31",
+      "Pronounce": "Be-seu-kin-ra-bin-seu 31",
+      "Attributes": {
+        "Difficulty": 1,
+        "NoiseLevel": 2,
+        "RiskLevel": 1,
+        "Required": "None"
+      },
+      "HowToPlay": {
+        "step01": "Players take turns saying one, two, or three consecutive numbers in sequence.",
+        "step02": "The goal is to avoid being the one to say '31'.",
+        "step03": "The player who says '31' must drink."
+      },
+      "SeeItInAction": [
+        "https://www.youtube.com/watch?v=0f7d5VRhLls"
+      ]
+    },
+    {
+      "id": 6,
+      "EngName": "007",
+      "KorName": "공공칠빵",
+      "Pronounce": "gong-gong-chil",
+      "Attributes": {
+        "Difficulty": 2,
+        "NoiseLevel": 3,
+        "RiskLevel": 2,
+        "Required": "None"
+      },
+      "HowToPlay": {
+        "step01": "Players sit in a circle. One player starts by pointing to another and says '0'.",
+        "step02": "The second player points to a third player and says '0', and the third player points to another and says '7'.",
+        "step03": "The player pointed at after '7' must say 'Bang' and point to another player, who then raises their hands."
+      },
+      "SeeItInAction": [
+        "https://www.youtube.com/watch?v=0f7d5VRhLls"
+      ]
+    },
+    {
+      "id": 7,
+      "EngName": "Bunny Bunny",
+      "KorName": "바니바니 당근당근",
+      "Pronounce": "To-kki",
+      "Attributes": {
+        "Difficulty": 3,
+        "NoiseLevel": 3,
+        "RiskLevel": 3,
+        "Required": "None"
+      },
+      "HowToPlay": {
+        "step01": "Players sit in a circle. One player starts by saying 'Bunny Bunny' twice while making bunny ear gestures.",
+        "step02": "The players to the immediate left and right must say 'Dang-geun Dang-geun' (carrot) while making carrot-eating gestures.",
+        "step03": "The 'Bunny' player then points to another player, who becomes the new 'Bunny'. Mistakes or delays result in taking a drink."
+      },
+      "SeeItInAction": [
+        "https://www.youtube.com/watch?v=0f7d5VRhLls"
+      ]
+    },
+    {
+      "id": 8,
       "EngName": "Nunchi Game",
       "KorName": "눈치게임",
       "Pronounce": "Nun-chi Ge-im",
       "Attributes": {
-        "Difficulty": "Medium",
-        "NoiseLevel": "High",
-        "RiskLevel": "Medium",
+        "Difficulty": 2,
+        "NoiseLevel": 3,
+        "RiskLevel": 2,
         "Required": "None"
       },
       "HowToPlay": {
@@ -181,67 +161,46 @@
       "SeeItInAction": [
         "https://www.youtube.com/watch?v=0f7d5VRhLls"
       ]
+  },
+  {
+    "id": 9,
+    "EngName": "Image Game",
+    "KorName": "이미지 게임",
+    "Pronounce": "I-mi-ji Ge-im",
+    "Attributes": {
+      "Difficulty": 1,
+      "NoiseLevel": 2,
+      "RiskLevel": 1,
+      "Required": "None"
     },
-    {
-      "id": 10,
-      "EngName": "Hunminjeongeum Game",
-      "KorName": "훈민정음게임",
-      "Pronounce": "Hun-min-jeong-eum Ge-im",
-      "Attributes": {
-        "Difficulty": "High",
-        "NoiseLevel": "High",
-        "RiskLevel": "High",
-        "Required": "None"
-      },
-      "HowToPlay": {
-        "step01": "Players sit in a circle and choose a category (e.g., animals, fruits).",
-        "step02": "The first player says a word from the chosen category.",
-        "step03": "The next player must say a word that starts with the last syllable of the previous word.",
-        "step04": "Players who hesitate or repeat a word must drink."
-      },
-      "SeeItInAction": [
-        "https://www.youtube.com/watch?v=0f7d5VRhLls"
-      ]
+    "HowToPlay": {
+      "step01": "Players take turns making statements like 'Point to the person who is most likely to...'.",
+      "step02": "On the count of three, everyone points to the person they think fits the description.",
+      "step03": "The person with the most fingers pointed at them drinks."
     },
-    {
-      "id": 11,
-      "EngName": "Image Game",
-      "KorName": "이미지 게임",
-      "Pronounce": "I-mi-ji Ge-im",
-      "Attributes": {
-        "Difficulty": "Low",
-        "NoiseLevel": "Medium",
-        "RiskLevel": "Low",
-        "Required": "None"
-      },
-      "HowToPlay": {
-        "step01": "Players take turns making statements like 'Point to the person who is most likely to...'.",
-        "step02": "On the count of three, everyone points to the person they think fits the description.",
-        "step03": "The person with the most fingers pointed at them drinks."
-      },
-      "SeeItInAction": [
-        "https://www.youtube.com/watch?v=0f7d5VRhLls"
-      ]
+    "SeeItInAction": [
+      "https://www.youtube.com/watch?v=0f7d5VRhLls"
+    ]
+  },
+  {
+    "id": 10,
+    "EngName": "The Bottle Cap Game",
+    "KorName": "병뚜껑 게임",
+    "Pronounce": "Eop-da-un",
+    "Attributes": {
+      "Difficulty": 1,
+      "NoiseLevel": 2,
+      "RiskLevel": 1,
+      "Required": "Soju bottle cap"
     },
-    {
-      "id": 12,
-      "EngName": "The Name Game",
-      "KorName": "이름 게임",
-      "Pronounce": "I-reum Ge-im",
-      "Attributes": {
-        "Difficulty": "Medium",
-        "NoiseLevel": "High",
-        "RiskLevel": "Medium",
-        "Required": "None"
-      },
-      "HowToPlay": {
-        "step01": "Players sit in a circle and establish a rhythm by tapping the table twice and then snapping their fingers.",
-        "step02": "On their turn, a player says their own name on the first snap and another player's name on the second snap.",
-        "step03": "The game continues with the player whose name was called. Mistakes or delays result in taking a drink."
-      },
-      "SeeItInAction": [
-        "https://www.youtube.com/watch?v=0f7d5VRhLls"
-      ]
-    }
+    "HowToPlay": {
+      "step01": "After opening a soju bottle, twist the loose metal strip under the cap into a long strand.",
+      "step02": "Players take turns flicking this strand.",
+      "step03": "The player who successfully breaks it off chooses someone to drink."
+    },
+    "SeeItInAction": [
+      "https://www.youtube.com/watch?v=0f7d5VRhLls"
     ]
   }
+  ]
+}

@@ -4,6 +4,7 @@ import {
   StyleSheet,
   TextInput,
   ImageBackground,
+  KeyboardAvoidingView,
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import { useRouter } from "expo-router";
@@ -117,21 +118,23 @@ export default function Settings() {
       <View style={styles.wrapper}>
         <View style={styles.content}>
           <Text style={styles.heading}>Nickname</Text>
-          <TextInput
-            value={inputValue}
-            placeholder="Enter your nickname"
-            style={[
-              styles.input,
-              isFocused ? styles.inputFocused : styles.input,
-            ]}
-            maxLength={10}
-            onFocus={() => setIsFocused(true)}
-            onBlur={() => setIsFocused(false)}
-            onChangeText={(text) => setInputValue(text)}
-          />
-          <Text style={styles.characterCounter}>
-            {inputValue.length}/10 Characters
-          </Text>
+          <View>
+            <TextInput
+              value={inputValue}
+              placeholder="Enter your nickname"
+              style={[
+                styles.input,
+                isFocused ? styles.inputFocused : styles.input,
+              ]}
+              maxLength={10}
+              onFocus={() => setIsFocused(true)}
+              onBlur={() => setIsFocused(false)}
+              onChangeText={(text) => setInputValue(text)}
+            />
+            <Text style={styles.characterCounter}>
+              {inputValue.length}/10 Characters
+            </Text>
+          </View>
           <View>
             <Text style={styles.helperText}>
               • A maximum length of 10 Characters
@@ -141,20 +144,11 @@ export default function Settings() {
             </Text>
           </View>
         </View>
-
         <CustomButton
           text={loading ? "SAVING..." : "SAVE"}
           onPress={handleSave}
           isDisabled={isButtonDisabled || loading}
         />
-
-        <View style={styles.logoutWrapper}>
-          <CustomButton
-            text={"LOG OUT"}
-            onPress={handleLogout}
-            isDisabled={loading}
-          />
-        </View>
       </View>
     </ImageBackground>
   );
@@ -169,7 +163,7 @@ const styles = StyleSheet.create({
   },
   wrapper: {
     width: "80%",
-    maxWidth: 400,
+    maxWidth: 450,
     marginHorizontal: 40,
   },
   content: {
@@ -190,6 +184,7 @@ const styles = StyleSheet.create({
     borderColor: "#848484",
     paddingVertical: 10,
     textDecorationLine: "none",
+    marginBottom: 8,
   },
   inputFocused: {
     backgroundColor: "#D9D9D9",
@@ -202,6 +197,7 @@ const styles = StyleSheet.create({
     lineHeight: 20,
   },
   characterCounter: {
+    fontFamily: "GmarketSansMedium",
     color: "#57BEF7",
     textAlign: "right",
     fontSize: 10,
