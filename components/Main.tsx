@@ -18,6 +18,8 @@ import CustomButton from "./ui/button";
 import gameData from "@/assets/data/gameData.json";
 import { Game } from "@/types";
 
+import GlobalStyles from "@/styles/globalStyles";
+
 const { width, height } = Dimensions.get("window");
 
 export default function Main({ username }: { username: string }) {
@@ -48,8 +50,9 @@ export default function Main({ username }: { username: string }) {
         source={require("@/assets/images/Paper_texture.png")}
       >
         <View style={styles.mainTitleWrapper}>
-          <Text style={styles.appText1}>{username}'s FAV</Text>
-          <Text style={styles.appText2}>Random Game</Text>
+          <Text style={GlobalStyles.appText1}>{username}'s FAV</Text>
+          <Text style={GlobalStyles.appText2}>Random</Text>
+          <Text style={GlobalStyles.appText2}>Game</Text>
         </View>
         <View style={styles.playButton}>
           <CustomButton text={"GAME START"} onPress={handleSelectRandomGame} />
@@ -113,23 +116,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   mainTitleWrapper: {
+    flex: 1,
+    justifyContent :'center',
+    alignItems: 'center',
     position: "absolute",
     width: width * 0.9,
     marginTop: height * 0.15,
     maxWidth: 450,
     zIndex: 1,
-  },
-  appText1: {
-    fontFamily: "HakgyoansimBold600",
-    fontSize: 28,
-    textAlign: 'center',
-    marginBottom: 40,
-  },
-  appText2: {
-    fontFamily: "HakgyoansimBold600",
-    fontSize: 60,
-    textTransform: "uppercase",
-    textAlign: 'center',
   },
   playButton: {
     position: "absolute",

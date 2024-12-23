@@ -15,6 +15,7 @@ import { supabase } from "../lib/supabase";
 import { useRouter } from "expo-router"; 
 
 import CustomButton from "./ui/button";
+import GlobalStyles from "@/styles/globalStyles";
 
 const { width, height } = Dimensions.get("window");
 
@@ -143,9 +144,9 @@ export default function Auth({ onUsernameFetch }: AuthProps) {
       />
       <View style={styles.mainWrapper}>
         <View style={styles.mainTitleWrapper}>
-          <Text style={styles.appText1}>________'s FAV</Text>
-          <Text style={styles.appText2}>Random</Text>
-          <Text style={styles.appText2}>Game</Text>
+          <Text style={GlobalStyles.appText1}>________'s FAV</Text>
+          <Text style={GlobalStyles.appText2}>Random</Text>
+          <Text style={GlobalStyles.appText2}>Game</Text>
         </View>
         <View style={styles.loginFormWrapper}>
           <View style={styles.inputWrapper}>
@@ -210,19 +211,7 @@ const styles = StyleSheet.create({
     marginBottom: 36,
   },
   loginFormWrapper:{
-    marginBottom: 50,
-  },
-  appText1: {
-    fontFamily: "HakgyoansimBold600",
-    fontSize: 28,
-    textAlign: 'center',
     marginBottom: 40,
-  },
-  appText2: {
-    fontFamily: "HakgyoansimBold600",
-    fontSize: 60,
-    textTransform: "uppercase",
-    textAlign: 'center',
   },
   inputWrapper:{
     marginBottom: 20,

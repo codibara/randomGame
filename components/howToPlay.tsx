@@ -9,14 +9,18 @@ interface HowToPlayProps {
 
 export default function HowToPlayDetail({ howToPlay }: HowToPlayProps) {
 
+    const howToPlayEntries = Object.entries(howToPlay);
+
     return (
             <View style={styles.container}>
                 <Text style={styles.section2Heading}>How To Play</Text>
                 <View style={styles.instructionContainer}>
-                {Object.entries(howToPlay).map(([key, value], index) => (
-                    <View key={index}>
-                        <Text>{key}</Text>
-                        <Text>{value}</Text>
+                {howToPlayEntries.map(([key, value], index) => (
+                    <View key={index} style={[styles.stepContainer,
+                        index === howToPlayEntries.length - 1 && styles.stepLastContainer,
+                     ]}>
+                        <Text style={styles.stepNumber}>{key}</Text>
+                        <Text style={styles.stepDetail}>{value}</Text>
                     </View>
                 ))}
                 </View>
@@ -32,7 +36,6 @@ const styles = StyleSheet.create({
     },
     instructionContainer: {
         flex: 1,
-        height: 500,
         borderRadius: 24,
         backgroundColor: "#ffffff",
         paddingTop: 32,
@@ -54,5 +57,32 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         borderRadius: 50,
         zIndex: 1,
-    }
+    },
+    stepContainer:{
+        display: 'flex',
+        flexDirection: 'row',
+        gap: 20,
+        paddingVertical: 20,
+        borderBottomWidth: 1,
+        borderStyle: 'dashed',
+        borderColor: "#848484",
+    },
+    stepLastContainer:{
+        borderBottomWidth: 0,
+    },
+    stepNumber:{
+        width: 52,
+        height: 52,
+        fontFamily: "GmarketSansBold",
+        fontSize: 24,
+        backgroundColor: '#57BEF7',
+        textAlign: 'center',
+        textAlignVertical: 'center',
+        borderRadius: 999,
+    },
+    stepDetail: {
+        flex: 1,
+        fontFamily: "GmarketSansMedium",
+        lineHeight: 20,
+    },
 });

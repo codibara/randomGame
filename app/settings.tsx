@@ -5,6 +5,7 @@ import {
   TextInput,
   ImageBackground,
   KeyboardAvoidingView,
+  Alert,
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import { useRouter } from "expo-router";
@@ -69,6 +70,7 @@ export default function Settings() {
 
       if (existingUser) {
         console.log("Existing user:", existingUser);
+        alert("The entered nickname already exists.")
         setLoading(false);
         return;
       }
@@ -93,6 +95,11 @@ export default function Settings() {
       router.push("/");
     } catch (error) {
       console.error("Error saving nickname:", error);
+      if (error instanceof Error) {
+        alert(error.message);
+      } else {
+        alert("An unexpected error occurred.");
+      }
     } finally {
       setLoading(false);
     }

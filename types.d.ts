@@ -6,9 +6,9 @@ export interface GameAttributes {
   }
 
   export interface HowToPlay {
-    step01: string;
-    step02: string;
-    step03: string;
+    1: string;
+    2: string;
+    3: string;
   }
   
   export interface Game {

@@ -12,10 +12,10 @@
         "Required": "None"
       },
       "HowToPlay": {
-        "step01": "At least two people are needed to play the game, but it becomes more fun with more players.",
-        "step02": "Players form a circle and begin to chant “apateu” four times together.",
-        "step03": "As the chant is over, the starting player screams a number he/she likes and everyone rushes to stack their hands on top of each other at the center.",
-        "step04": "The player whose hand is at the bottom of the stack moves it to the top while screaming “one.” The next person does the same, counting “two,” and so on, until the number shouted at the beginning is reached. The person who moves the hand at the final number loses the game, and has to drink. They start the next round by calling a new number."
+        "1": "At least two people are needed to play the game, but it becomes more fun with more players.",
+        "2": "Players form a circle and begin to chant “apateu” four times together.",
+        "3": "As the chant is over, the starting player screams a number he/she likes and everyone rushes to stack their hands on top of each other at the center.",
+        "4": "The player whose hand is at the bottom of the stack moves it to the top while screaming “one.” The next person does the same, counting “two,” and so on, until the number shouted at the beginning is reached. The person who moves the hand at the final number loses the game, and has to drink. They start the next round by calling a new number."
       },
       "SeeItInAction": [
         "https://youtu.be/Mpua2UPzb9M?si=VpjZfZesgVkoeL3Q"
@@ -33,10 +33,10 @@
         "Required": "Soju bottle cap with hidden number"
       },
       "HowToPlay": {
-        "step01": "One player looks at the hidden number under the soju bottle cap.",
-        "step02": "Other players take turns guessing the number between 1 and 50.",
-        "step03": "After each guess, the player with the cap indicates if the actual number is higher ('Up') or lower ('Down') than the guess.",
-        "step04": "The player who guesses the correct number chooses someone to drink."
+        "1": "One player looks at the hidden number under the soju bottle cap.",
+        "2": "Other players take turns guessing the number between 1 and 50.",
+        "3": "After each guess, the player with the cap indicates if the actual number is higher ('Up') or lower ('Down') than the guess.",
+        "4": "The player who guesses the correct number chooses someone to drink."
       },
       "SeeItInAction": [
         "https://www.youtube.com/watch?v=0f7d5VRhLls"
@@ -54,9 +54,9 @@
         "Required": "Beer glass, soju shot glass, beer, soju"
       },
       "HowToPlay": {
-        "step01": "Fill a large glass partially with beer and float a shot glass on top.",
-        "step02": "Players take turns pouring soju into the floating shot glass.",
-        "step03": "The player who causes the shot glass to sink drinks the mixture."
+        "1": "Fill a large glass partially with beer and float a shot glass on top.",
+        "2": "Players take turns pouring soju into the floating shot glass.",
+        "3": "The player who causes the shot glass to sink drinks the mixture."
       },
       "SeeItInAction": [
         "https://www.youtube.com/watch?v=0f7d5VRhLls"
@@ -74,9 +74,9 @@
         "Required": "None"
       },
       "HowToPlay": {
-        "step01": "Players take turns counting aloud in sequence.",
-        "step02": "For numbers containing or being multiples of 3, 6, or 9, the player must clap instead of speaking.",
-        "step03": "Mistakes result in taking a drink."
+        "1": "Players take turns counting aloud in sequence.",
+        "2": "For numbers containing or being multiples of 3, 6, or 9, the player must clap instead of speaking.",
+        "3": "Mistakes result in taking a drink."
       },
       "SeeItInAction": [
         "https://www.youtube.com/watch?v=0f7d5VRhLls"
@@ -94,9 +94,9 @@
         "Required": "None"
       },
       "HowToPlay": {
-        "step01": "Players take turns saying one, two, or three consecutive numbers in sequence.",
-        "step02": "The goal is to avoid being the one to say '31'.",
-        "step03": "The player who says '31' must drink."
+        "1": "Players take turns saying one, two, or three consecutive numbers in sequence.",
+        "2": "The goal is to avoid being the one to say '31'.",
+        "3": "The player who says '31' must drink."
       },
       "SeeItInAction": [
         "https://www.youtube.com/watch?v=0f7d5VRhLls"
@@ -114,9 +114,9 @@
         "Required": "None"
       },
       "HowToPlay": {
-        "step01": "Players sit in a circle. One player starts by pointing to another and says '0'.",
-        "step02": "The second player points to a third player and says '0', and the third player points to another and says '7'.",
-        "step03": "The player pointed at after '7' must say 'Bang' and point to another player, who then raises their hands."
+        "1": "Players sit in a circle. One player starts by pointing to another and says '0'.",
+        "2": "The second player points to a third player and says '0', and the third player points to another and says '7'.",
+        "3": "The player pointed at after '7' must say 'Bang' and point to another player, who then raises their hands."
       },
       "SeeItInAction": [
         "https://www.youtube.com/watch?v=0f7d5VRhLls"
@@ -134,9 +134,9 @@
         "Required": "None"
       },
       "HowToPlay": {
-        "step01": "Players sit in a circle. One player starts by saying 'Bunny Bunny' twice while making bunny ear gestures.",
-        "step02": "The players to the immediate left and right must say 'Dang-geun Dang-geun' (carrot) while making carrot-eating gestures.",
-        "step03": "The 'Bunny' player then points to another player, who becomes the new 'Bunny'. Mistakes or delays result in taking a drink."
+        "1": "Players sit in a circle. One player starts by saying 'Bunny Bunny' twice while making bunny ear gestures.",
+        "2": "The players to the immediate left and right must say 'Dang-geun Dang-geun' (carrot) while making carrot-eating gestures.",
+        "3": "The 'Bunny' player then points to another player, who becomes the new 'Bunny'. Mistakes or delays result in taking a drink."
       },
       "SeeItInAction": [
         "https://www.youtube.com/watch?v=0f7d5VRhLls"
@@ -154,9 +154,9 @@
         "Required": "None"
       },
       "HowToPlay": {
-        "step01": "Players sit in a circle and must stand up one at a time without any verbal cues.",
-        "step02": "If two or more players stand up simultaneously, they must drink.",
-        "step03": "The game continues until all players have successfully stood up without overlapping."
+        "1": "Players sit in a circle and must stand up one at a time without any verbal cues.",
+        "2": "If two or more players stand up simultaneously, they must drink.",
+        "3": "The game continues until all players have successfully stood up without overlapping."
       },
       "SeeItInAction": [
         "https://www.youtube.com/watch?v=0f7d5VRhLls"
@@ -174,9 +174,9 @@
       "Required": "None"
     },
     "HowToPlay": {
-      "step01": "Players take turns making statements like 'Point to the person who is most likely to...'.",
-      "step02": "On the count of three, everyone points to the person they think fits the description.",
-      "step03": "The person with the most fingers pointed at them drinks."
+      "1": "Players take turns making statements like 'Point to the person who is most likely to...'.",
+      "2": "On the count of three, everyone points to the person they think fits the description.",
+      "3": "The person with the most fingers pointed at them drinks."
     },
     "SeeItInAction": [
       "https://www.youtube.com/watch?v=0f7d5VRhLls"
@@ -194,9 +194,9 @@
       "Required": "Soju bottle cap"
     },
     "HowToPlay": {
-      "step01": "After opening a soju bottle, twist the loose metal strip under the cap into a long strand.",
-      "step02": "Players take turns flicking this strand.",
-      "step03": "The player who successfully breaks it off chooses someone to drink."
+      "1": "After opening a soju bottle, twist the loose metal strip under the cap into a long strand.",
+      "2": "Players take turns flicking this strand.",
+      "3": "The player who successfully breaks it off chooses someone to drink."
     },
     "SeeItInAction": [
       "https://www.youtube.com/watch?v=0f7d5VRhLls"

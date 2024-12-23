@@ -199,17 +199,17 @@ export default function RootLayout() {
                     size={24} 
                     color="#000"
                     onPress={toggleMenu}
-                    style={{backgroundColor: '#ffffff', padding: 8, borderRadius: 30, borderWidth: 1, borderColor: "#FF00A1"}}
+                    style={{backgroundColor: '#ffffff', padding: 10, borderRadius: 30, borderWidth: 1, borderColor: "#FF00A1"}}
                   />
                 ),
-                headerRight: () => (
-                  <Ionicons
-                    name="share-social-outline" 
-                    size={24} 
-                    color="#000"
-                    onPress={handleShare}
-                  />
-                )
+                // headerRight: () => (
+                //   <Ionicons
+                //     name="share-social-outline" 
+                //     size={24} 
+                //     color="#000"
+                //     onPress={handleShare}
+                //   />
+                // )
               }}
             />
             <Stack.Screen 
@@ -226,14 +226,14 @@ export default function RootLayout() {
                     onPress={toggleMenu}
                   />
                 ),
-                headerRight: () => (
-                  <Ionicons
-                    name="share-social-outline" 
-                    size={24} 
-                    color="#000"
-                    onPress={handleShare}
-                  />
-                )
+                // headerRight: () => (
+                //   <Ionicons
+                //     name="share-social-outline" 
+                //     size={24} 
+                //     color="#000"
+                //     onPress={handleShare}
+                //   />
+                // )
               }}
             />
             <Stack.Screen 

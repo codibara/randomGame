@@ -47,16 +47,22 @@ const styles = StyleSheet.create({
   valueContainer: {
     flexDirection: "row",
     flexWrap: "wrap",
+    //paddingHorizontal: 8,
   },
   attributeValue: {
-    fontSize: 32,
-    marginHorizontal: 2,
+    fontSize: 28,
+    // marginLeft: -8,
+    // padding: 4,
+    // backgroundColor: '#ffffff',
+    // borderRadius: 999,
+    // elevation: 2,
   },
   textValue: {
     fontFamily: "GmarketSansMedium",
     fontSize: 12,
     lineHeight: 16,
     color: "#333",
+    //marginLeft: -8,
   },
 });
 

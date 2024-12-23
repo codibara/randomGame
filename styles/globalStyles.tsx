@@ -1,5 +1,6 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, Dimensions } from "react-native";
 
+const { height } = Dimensions.get("window");
 
 const GlobalStyles = StyleSheet.create({
     primaryBtnWrapper:{
@@ -43,7 +44,18 @@ const GlobalStyles = StyleSheet.create({
     primaryBtnTextPressed:{
         color: '#ffffff',
     },
-    
+    appText1: {
+        fontFamily: "HakgyoansimBold600",
+        fontSize: height * 0.035,
+        textAlign: 'center',
+        marginBottom: 40,
+    },
+    appText2: {
+        fontFamily: "HakgyoansimBold600",
+        fontSize: height * 0.075,
+        textTransform: "uppercase",
+        textAlign: 'center',
+    },
   });
   
   export default GlobalStyles;
