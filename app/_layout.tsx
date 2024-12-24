@@ -7,7 +7,7 @@ import {
 import { useFonts } from "expo-font";
 import { router, Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
-import { useEffect, useState, useRef} from "react";
+import { useEffect, useState, useRef } from "react";
 import {
   View,
   StyleSheet,
@@ -136,7 +136,8 @@ export default function RootLayout() {
   //share playstore link (will be added to the share icon)
   const handleShare = async () => {
     try {
-      const appLink = "https://play.google.com/store/apps/details?id=com.trello"; // Will be eplace with App Store or Play Store URL
+      const appLink =
+        "https://play.google.com/store/apps/details?id=com.trello"; // Will be eplace with App Store or Play Store URL
 
       const result = await Share.share({
         title: "Download Our App",
@@ -157,121 +158,122 @@ export default function RootLayout() {
     }
   };
 
-
-
   return (
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-        <View style={styles.drawer}>
-          {/* Sliding Drawer Menu */}
-          <Animated.View
-            style={[
-              styles.menu,
-              { transform: [{ translateX: menuAnimation }] },
-            ]}
-          >
-          <Menu handler={toggleMenu}/>
-          </Animated.View>
+      <View style={styles.drawer}>
+        {/* Sliding Drawer Menu */}
+        <Animated.View
+          style={[styles.menu, { transform: [{ translateX: menuAnimation }] }]}
+        >
+          <Menu handler={toggleMenu} />
+        </Animated.View>
 
-          {/* Overlay */}
-          {menuVisible && (
-            <TouchableWithoutFeedback onPress={toggleMenu}>
-              <View style={styles.overlay} />
-            </TouchableWithoutFeedback>
-          )}
-          
-          {/* Navigation */}
-          <Stack
-            screenOptions={{
-              //headerStyle: { backgroundColor: '#E9E9E9' },
-              headerStyle: { backgroundColor: 'transparent' },
+        {/* Overlay */}
+        {menuVisible && (
+          <TouchableWithoutFeedback onPress={toggleMenu}>
+            <View style={styles.overlay} />
+          </TouchableWithoutFeedback>
+        )}
+
+        {/* Navigation */}
+        <Stack
+          screenOptions={{
+            // headerStyle: { backgroundColor: "#E9E9E9" },
+            headerStyle: { backgroundColor: "transparent" },
+          }}
+        >
+          <Stack.Screen
+            name="index"
+            options={{
+              headerShown: !!session,
+              headerTitle: "",
+              headerTransparent: true,
+              headerBackVisible: false,
+              headerLeft: () => (
+                <Ionicons
+                  name="menu-outline"
+                  size={24}
+                  color="#000"
+                  onPress={toggleMenu}
+                  style={{
+                    backgroundColor: "#ffffff",
+                    padding: 10,
+                    borderRadius: 30,
+                    borderWidth: 1,
+                    borderColor: "#FF00A1",
+                  }}
+                />
+              ),
+              // headerRight: () => (
+              //   <Ionicons
+              //     name="share-social-outline"
+              //     size={24}
+              //     color="#000"
+              //     onPress={handleShare}
+              //   />
+              // )
             }}
-          >
-            <Stack.Screen 
-              name="index" 
-              options={{
-                headerShown: !!session, 
-                headerTitle: "",
-                headerTransparent: true,
-                headerBackVisible: false,
-                headerLeft: () => (
-                  <Ionicons
-                    name="menu-outline" 
-                    size={24} 
-                    color="#000"
-                    onPress={toggleMenu}
-                    style={{backgroundColor: '#ffffff', padding: 10, borderRadius: 30, borderWidth: 1, borderColor: "#FF00A1"}}
-                  />
-                ),
-                // headerRight: () => (
-                //   <Ionicons
-                //     name="share-social-outline" 
-                //     size={24} 
-                //     color="#000"
-                //     onPress={handleShare}
-                //   />
-                // )
-              }}
-            />
-            <Stack.Screen 
-              name="game/[id]" 
-              options={{ 
-                headerTitle: "",
-                headerTransparent: true,
-                headerBackVisible: false,
-                headerLeft: () => (
-                  <Ionicons
-                    name="menu-outline" 
-                    size={24} 
-                    color="#000"
-                    onPress={toggleMenu}
-                  />
-                ),
-                // headerRight: () => (
-                //   <Ionicons
-                //     name="share-social-outline" 
-                //     size={24} 
-                //     color="#000"
-                //     onPress={handleShare}
-                //   />
-                // )
-              }}
-            />
-            <Stack.Screen 
-              name="settings" 
-              options={{ 
-                headerTitle: "SETTINGS",
-                headerTransparent: true,
-                headerBackVisible: false,
-                headerTitleAlign: "center", 
-                headerLeft: () => (
-                  <Ionicons
-                    name="menu-outline" 
-                    size={24} 
-                    color="#000"
-                    onPress={toggleMenu}
-                  />
-                ),
-                // headerRight: () => (
-                //   <Ionicons
-                //     name="log-out-outline"
-                //     size={24}
-                //     color="#000"
-                //     onPress={async () => {
-                //       try {
-                //         const { error } = await supabase.auth.signOut();
-                //         if (error) throw error;
-                //         router.push("/");
-                //       } catch (error) {
-                //         console.error("Error logging out:", error);
-                //       }
-                //     }}
-                //     style={{ marginRight: 10 }}
-                //   />
-                // ),
-              }}
-            />
-          </Stack>
-        </View>
+          />
+          <Stack.Screen
+            name="game/[id]"
+            options={{
+              headerTitle: "",
+              headerTransparent: true,
+              headerBackVisible: false,
+              headerLeft: () => (
+                <Ionicons
+                  name="menu-outline"
+                  size={24}
+                  color="#000"
+                  onPress={toggleMenu}
+                />
+              ),
+              // headerRight: () => (
+              //   <Ionicons
+              //     name="share-social-outline"
+              //     size={24}
+              //     color="#000"
+              //     onPress={handleShare}
+              //   />
+              // )
+            }}
+          />
+          <Stack.Screen
+            name="settings"
+            options={{
+              headerTitle: "SETTINGS",
+              headerTransparent: true,
+              headerBackVisible: false,
+              headerTitleAlign: "center",
+              headerLeft: () => (
+                <Ionicons
+                  name="menu-outline"
+                  size={24}
+                  color="#000"
+                  onPress={toggleMenu}
+                />
+              ),
+              // headerRight: () => (
+              //   <Ionicons
+              //     name="log-out-outline"
+              //     size={24}
+              //     color="#000"
+              //     onPress={async () => {
+              //       try {
+              //         const { error } = await supabase.auth.signOut();
+              //         if (error) throw error;
+              //         router.push("/");
+              //       } catch (error) {
+              //         console.error("Error logging out:", error);
+              //       }
+              //     }}
+              //     style={{ marginRight: 10 }}
+              //   />
+              // ),
+            }}
+          />
+        </Stack>
+      </View>
     </ThemeProvider>
   );
 }
@@ -286,7 +288,7 @@ const styles = StyleSheet.create({
   logo: {
     width: 300,
     height: 300,
-    aspectRatio: 1/1,
+    aspectRatio: 1 / 1,
     resizeMode: "contain",
   },
   drawer: {

@@ -10,16 +10,16 @@ import {
   ScrollView,
   Platform,
   TextInput,
+  TouchableOpacity,
 } from "react-native";
 import { supabase } from "../lib/supabase";
-import { useRouter } from "expo-router"; 
+import { useRouter } from "expo-router";
 
 import CustomButton from "./ui/button";
 import GlobalStyles from "@/styles/globalStyles";
 
 const { width, height } = Dimensions.get("window");
 
-// Automatically refresh Supabase session in the foreground
 AppState.addEventListener("change", (state) => {
   if (state === "active") {
     supabase.auth.startAutoRefresh();
@@ -29,7 +29,7 @@ AppState.addEventListener("change", (state) => {
 });
 
 interface AuthProps {
-  onUsernameFetch: (username: string) => void; // Callback to update the username in the parent component
+  onUsernameFetch: (username: string) => void;
 }
 
 export default function Auth({ onUsernameFetch }: AuthProps) {
@@ -37,23 +37,49 @@ export default function Auth({ onUsernameFetch }: AuthProps) {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const isButtonDisabled = email.trim() === "" || password.trim() === "";
-  const router = useRouter(); // Initialize useRouter
+  const router = useRouter();
 
-  // Sign up with email
   async function signUpWithEmail() {
     if (!validateInputs()) return;
 
     setLoading(true);
-
-
     try {
       const { data, error } = await supabase.auth.signUp({
         email: email,
         password: password,
       });
+
+      if (error && error.message === "User already registered") {
+        console.log("Email already exists. Logging in...");
+        const loginResult = await supabase.auth.signInWithPassword({
+          email: email,
+          password: password,
+        });
+
+        if (loginResult.error) throw loginResult.error;
+
+        const userId = loginResult.data.user?.id;
+        if (!userId) throw new Error("User not found during login");
+
+        const { data: profile, error: profileError } = await supabase
+          .from("profiles")
+          .select("username")
+          .eq("id", userId)
+          .single();
+
+        if (profileError) throw profileError;
+
+        if (profile?.username) {
+          onUsernameFetch(profile.username);
+        }
+
+        router.push("/settings");
+        return;
+      }
 
       if (error) throw error;
 
@@ -62,25 +88,20 @@ export default function Auth({ onUsernameFetch }: AuthProps) {
 
         if (!userId) throw new Error("User not found");
 
-        // Use the user's email as the default username
         const userEmail = data.user.email || email;
 
-        // Upsert user email and username (default to email) into profiles table
         const { error: insertError } = await supabase.from("profiles").upsert([
           {
             id: userId,
             email: userEmail,
-            username: userEmail, // Default username as email
+            username: userEmail,
             updated_at: new Date(),
           },
         ]);
 
         if (insertError) throw insertError;
 
-        onUsernameFetch(userEmail); // Update the username in the parent
-        //console.log("Username:", userEmail);
-
-        // Navigate to the Settings screen
+        onUsernameFetch(userEmail); 
         router.push("/settings");
       } else {
         console.log("Signup failed. No user returned.");
@@ -99,12 +120,10 @@ export default function Auth({ onUsernameFetch }: AuthProps) {
 
   function validateInputs() {
     let valid = true;
-  
-    // Reset error messages
+
     setEmailError("");
     setPasswordError("");
-  
-    // Validate email
+
     if (!email.trim()) {
       setEmailError("Email is required.");
       valid = false;
@@ -112,8 +131,7 @@ export default function Auth({ onUsernameFetch }: AuthProps) {
       setEmailError("Please enter a valid email address.");
       valid = false;
     }
-  
-    // Validate password
+
     if (!password.trim()) {
       setPasswordError("Password is required.");
       valid = false;
@@ -121,7 +139,7 @@ export default function Auth({ onUsernameFetch }: AuthProps) {
       setPasswordError("Password must be at least 6 characters.");
       valid = false;
     }
-  
+
     return valid;
   }
 
@@ -130,15 +148,15 @@ export default function Auth({ onUsernameFetch }: AuthProps) {
       style={styles.container}
       source={require("@/assets/images/Paper_texture.png")}
     >
-      <ImageBackground 
+      <ImageBackground
         style={[styles.decoImg, styles.decoTopPosition]}
         source={require("@/assets/images/doodle.png")}
       />
-      <ImageBackground 
+      <ImageBackground
         style={[styles.decoImg, styles.decoCenterPosition]}
         source={require("@/assets/images/doodle2.png")}
       />
-      <ImageBackground 
+      <ImageBackground
         style={[styles.decoImg, styles.decoBottomPosition]}
         source={require("@/assets/images/doodle.png")}
       />
@@ -163,24 +181,39 @@ export default function Auth({ onUsernameFetch }: AuthProps) {
               onFocus={() => setIsFocused(true)}
               onBlur={() => setIsFocused(false)}
             />
-            {emailError ? <Text style={styles.errorText}>{emailError}</Text> : null}
+            {emailError ? (
+              <Text style={styles.errorText}>{emailError}</Text>
+            ) : null}
           </View>
           <View style={styles.inputWrapper}>
             <Text style={styles.inputLable}>Password</Text>
-            <TextInput
-              style={[
-                styles.input,
-                isFocused ? styles.inputFocused : styles.input,
-              ]}
-              onChangeText={(text) => setPassword(text)}
-              value={password}
-              secureTextEntry={true}
-              placeholder="Minimum 6 characters"
-              autoCapitalize={"none"}
-              onFocus={() => setIsFocused(true)}
-              onBlur={() => setIsFocused(false)}
-            />
-            {passwordError ? <Text style={styles.errorText}>{passwordError}</Text> : null}
+            <View style={styles.passwordContainer}>
+              <TextInput
+                style={[
+                  styles.input,
+                  isFocused ? styles.inputFocused : styles.input,
+                  styles.passwordInput,
+                ]}
+                onChangeText={(text) => setPassword(text)}
+                value={password}
+                secureTextEntry={!isPasswordVisible}
+                placeholder="Minimum 6 characters"
+                autoCapitalize={"none"}
+                onFocus={() => setIsFocused(true)}
+                onBlur={() => setIsFocused(false)}
+              />
+              <TouchableOpacity
+                onPress={() => setIsPasswordVisible(!isPasswordVisible)}
+                style={styles.toggleButton}
+              >
+                <Text style={styles.toggleText}>
+                  {isPasswordVisible ? "Hide" : "Show"}
+                </Text>
+              </TouchableOpacity>
+            </View>
+            {passwordError ? (
+              <Text style={styles.errorText}>{passwordError}</Text>
+            ) : null}
           </View>
         </View>
         <View>
@@ -203,20 +236,20 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     paddingVertical: 50,
   },
-  mainWrapper:{
+  mainWrapper: {
     width: width * 0.8,
     maxWidth: 450,
   },
   mainTitleWrapper: {
     marginBottom: 36,
   },
-  loginFormWrapper:{
+  loginFormWrapper: {
     marginBottom: 40,
   },
-  inputWrapper:{
+  inputWrapper: {
     marginBottom: 20,
   },
-  inputLable:{
+  inputLable: {
     fontFamily: "GmarketSansMedium",
     fontSize: 12,
     color: "#FF00A1",
@@ -229,24 +262,38 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     textDecorationLine: "none",
   },
+  passwordContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  passwordInput: {
+    flex: 1,
+  },
+  toggleButton: {
+    marginLeft: 10,
+  },
+  toggleText: {
+    fontFamily: "GmarketSansMedium",
+    color: "#57BEF7",
+  },
   inputFocused: {
     backgroundColor: "#D9D9D9",
   },
-  decoImg:{
+  decoImg: {
     width: width * 0.6,
-    aspectRatio: 1/1,
-    position: 'absolute',
+    aspectRatio: 1 / 1,
+    position: "absolute",
   },
-  decoTopPosition:{
+  decoTopPosition: {
     top: -60,
     left: -100,
   },
-  decoCenterPosition:{
+  decoCenterPosition: {
     top: height * 0.4,
     right: -70,
-    transform: [{ rotate: '80deg' }]
+    transform: [{ rotate: "80deg" }],
   },
-  decoBottomPosition:{
+  decoBottomPosition: {
     bottom: -80,
     left: 0,
   },

@@ -4,27 +4,35 @@ import { supabase } from "../lib/supabase";
 import Auth from "../components/Auth";
 import { Session } from "@supabase/supabase-js";
 import Main from "@/components/Main";
-import { Text, StyleSheet, View,} from "react-native";
+import { Text, StyleSheet, View, ActivityIndicator } from "react-native";
 
 export default function HomeScreen() {
   const [session, setSession] = useState<Session | null>(null);
   const [username, setUsername] = useState<string | null>(null);
   const [isProfileComplete, setIsProfileComplete] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
-      if (session) {
-        getProfile(session.user.id);
+    const fetchSession = async () => {
+      const { data: sessionData } = await supabase.auth.getSession();
+      setSession(sessionData.session);
+      if (sessionData.session) {
+        await getProfile(sessionData.session.user.id);
       }
-    });
+      setLoading(false); 
+    };
 
-    supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session);
-      if (session) {
-        getProfile(session.user.id);
+    fetchSession();
+
+    const { data: subscription } = supabase.auth.onAuthStateChange(
+      async (_event, session) => {
+        setSession(session);
+        if (session) {
+          await getProfile(session.user.id);
+        }
+        setLoading(false);
       }
-    });
+    );
   }, []);
 
   async function getProfile(userId: string) {
@@ -51,13 +59,21 @@ export default function HomeScreen() {
     }
   }
 
+  if (loading) {
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color="#0000ff" />
+      </View>
+    );
+  }
+
   return (
     <View style={styles.container}>
       {session && session.user ? (
         <>
           {!isProfileComplete && (
             <View style={styles.content}>
-              <Auth onUsernameFetch={setUsername} />
+              <Text style={styles.loadingText}>Loading profile...</Text>
             </View>
           )}
           {isProfileComplete && (
@@ -98,19 +114,14 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     width: "100%",
   },
-  title: {
-    marginBottom: 20,
-  },
-  username: {
-    fontSize: 20,
-    fontWeight: "bold",
-    marginBottom: 20,
-    textAlign: "center",
-  },
-  signOutContainer: {
-    width: "100%",
-    position: "absolute",
-    bottom: 20,
+  loadingContainer: {
+    flex: 1,
     alignItems: "center",
+    justifyContent: "center",
+  },
+  loadingText: {
+    fontSize: 18,
+    textAlign: "center",
+    marginVertical: 20,
   },
 });

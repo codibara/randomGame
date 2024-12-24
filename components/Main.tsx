@@ -1,13 +1,12 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
   StyleSheet,
   Dimensions,
-  TouchableOpacity,
   Modal,
   ImageBackground,
+  TouchableOpacity,
 } from "react-native";
 import { useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
@@ -54,9 +53,11 @@ export default function Main({ username }: { username: string }) {
           <Text style={GlobalStyles.appText2}>Random</Text>
           <Text style={GlobalStyles.appText2}>Game</Text>
         </View>
+
         <View style={styles.playButton}>
-          <CustomButton text={"GAME START"} onPress={handleSelectRandomGame} />
+          <CustomButton text="GAME START" onPress={handleSelectRandomGame} />
         </View>
+
         <Modal
           animationType="slide"
           transparent={true}
@@ -84,14 +85,22 @@ export default function Main({ username }: { username: string }) {
                       {selectedGame.EngName}
                     </Text>
                     <View style={styles.attributesContainer}>
-                      <Text style={styles.attributesText}>😵‍💫 x {selectedGame.Attributes.Difficulty}</Text>
-                      <Text style={styles.attributesText}>🔊 x {selectedGame.Attributes.NoiseLevel}</Text>
-                      <Text style={styles.attributesText}>🍺 x {selectedGame.Attributes.RiskLevel}</Text>
+                      <Text style={styles.attributesText}>
+                        😵‍💫 x {selectedGame.Attributes.Difficulty}
+                      </Text>
+                      <Text style={styles.attributesText}>
+                        🔊 x {selectedGame.Attributes.NoiseLevel}
+                      </Text>
+                      <Text style={styles.attributesText}>
+                        🍺 x {selectedGame.Attributes.RiskLevel}
+                      </Text>
                     </View>
-                    <CustomButton
-                      text={"MORE DETAILS"}
-                      onPress={() => router.push(`/game/${selectedGame.id}`)}
-                    />
+                    <View style={{ width: "100%" }}>
+                      <CustomButton
+                        text="MORE DETAILS"
+                        onPress={() => router.push(`/game/${selectedGame.id}`)}
+                      />
+                    </View>
                   </>
                 )}
               </View>
@@ -117,8 +126,8 @@ const styles = StyleSheet.create({
   },
   mainTitleWrapper: {
     flex: 1,
-    justifyContent :'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     position: "absolute",
     width: width * 0.9,
     marginTop: height * 0.15,
@@ -136,7 +145,7 @@ const styles = StyleSheet.create({
     flex: 1,
     display: "flex",
     alignItems: "center",
-    justifyContent: 'flex-end',
+    justifyContent: "flex-end",
     backgroundColor: "rgba(0, 0, 0, 0)",
   },
   modalContent: {
@@ -149,13 +158,11 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     borderRadius: 28,
     padding: 20,
-    //for IOS start
     shadowColor: "#000000",
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.25,
     shadowRadius: 4,
-    //for IOS end
-    elevation: 8, // Elevation for Android
+    elevation: 8,
   },
   modalTitle: {
     fontFamily: "GmarketSansBold",
@@ -163,7 +170,6 @@ const styles = StyleSheet.create({
     fontSize: 24,
   },
   closeButtonWrapper: {
-    display: "flex",
     alignItems: "flex-end",
   },
   closeButton: {
@@ -177,13 +183,13 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   attributesContainer: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
   },
   attributesText: {
     fontFamily: "HakgyoansimBold600",
     fontSize: 40,
     paddingVertical: 12,
-  }
+  },
 });

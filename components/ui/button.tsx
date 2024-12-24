@@ -4,19 +4,18 @@ import GlobalStyles from "@/styles/globalStyles";
 import { Ionicons } from "@expo/vector-icons";
 
 interface CustomButtonProps {
-    text: string;
-    onPress: () => void;
-    isDisabled?: boolean; 
-    iconName?: keyof typeof Ionicons.glyphMap;
-  }
+  text: string;
+  onPress: () => void;
+  isDisabled?: boolean;
+  iconName?: keyof typeof Ionicons.glyphMap;
+}
 
 const CustomButton: React.FC<CustomButtonProps> = ({
-    text,
-    onPress,
-    isDisabled = false,
-    iconName
-  }) => {
-    
+  text,
+  onPress,
+  isDisabled = false,
+  iconName,
+}) => {
   const [isPressed, setIsPressed] = useState(false);
 
   return (
@@ -33,17 +32,19 @@ const CustomButton: React.FC<CustomButtonProps> = ({
       onPressOut={() => setIsPressed(false)}
       onPress={onPress}
       disabled={isDisabled}
-      activeOpacity={1}
+      activeOpacity={1} // fully opaque
     >
       <View style={GlobalStyles.primaryBtnWrapper}>
-        {iconName && (<Ionicons 
-          name={iconName}
-          size={20} 
-          color={isDisabled ? '#848484' : isPressed ? '#ffffff':'#FF00A1'}
-        />)}
+        {iconName && (
+          <Ionicons
+            name={iconName}
+            size={20}
+            color={isDisabled ? "#848484" : isPressed ? "#ffffff" : "#FF00A1"}
+          />
+        )}
         <Text
           style={[
-              GlobalStyles.primaryBtnText,
+            GlobalStyles.primaryBtnText,
             isDisabled
               ? GlobalStyles.primaryBtnTextDisabled
               : isPressed
@@ -56,6 +57,6 @@ const CustomButton: React.FC<CustomButtonProps> = ({
       </View>
     </TouchableOpacity>
   );
-}
+};
 
 export default CustomButton;

@@ -1,16 +1,19 @@
-import {
-  View,
-  Text,
-  StyleSheet,
-  TextInput,
-  ImageBackground,
-  KeyboardAvoidingView,
-  Alert,
-} from "react-native";
 import React, { useState, useEffect } from "react";
+import {
+  StyleSheet,
+  View,
+  Dimensions,
+  ImageBackground,
+  Text,
+  TextInput,
+  TouchableOpacity,
+} from "react-native";
 import { useRouter } from "expo-router";
 import { supabase } from "../lib/supabase";
 import CustomButton from "@/components/ui/button";
+import GlobalStyles from "@/styles/globalStyles";
+
+const { width, height } = Dimensions.get("window");
 
 export default function Settings() {
   const [isFocused, setIsFocused] = useState(false);
@@ -19,13 +22,11 @@ export default function Settings() {
   const isButtonDisabled = inputValue.trim() === "";
   const router = useRouter();
 
-  // **Fetch the nickname directly from Supabase**
   useEffect(() => {
     const fetchNickname = async () => {
       try {
         setLoading(true);
 
-        // Get the current user
         const {
           data: { user },
           error: userError,
@@ -33,7 +34,6 @@ export default function Settings() {
 
         if (userError || !user) throw userError || new Error("User not found");
 
-        // Fetch the current username from Supabase
         const { data, error } = await supabase
           .from("profiles")
           .select("username")
@@ -41,12 +41,11 @@ export default function Settings() {
           .single();
 
         if (error) throw error;
-
         if (data && data.username) {
-          setInputValue(data.username); // Set the input value to fetched username
+          setInputValue(data.username);
         }
       } catch (error) {
-        console.error("Error fetching nickname from Supabase:", error);
+        console.error("Error fetching nickname:", error);
       } finally {
         setLoading(false);
       }
@@ -55,27 +54,11 @@ export default function Settings() {
     fetchNickname();
   }, []);
 
-  // **Save the nickname to Supabase**
   const handleSave = async () => {
     try {
       setLoading(true);
       const trimmedNickname = inputValue.trim();
 
-      // Check for duplicate nicknames
-      const { data: existingUser, error: checkError } = await supabase
-        .from("profiles")
-        .select("id")
-        .eq("username", trimmedNickname)
-        .single();
-
-      if (existingUser) {
-        console.log("Existing user:", existingUser);
-        alert("The entered nickname already exists.")
-        setLoading(false);
-        return;
-      }
-
-      // Get the current user
       const {
         data: { user },
         error: userError,
@@ -83,7 +66,6 @@ export default function Settings() {
 
       if (userError || !user) throw userError || new Error("User not found");
 
-      // Update the username in Supabase
       const { error } = await supabase.from("profiles").upsert({
         id: user.id,
         username: trimmedNickname,
@@ -105,12 +87,10 @@ export default function Settings() {
     }
   };
 
-  // **Handle logout**
   const handleLogout = async () => {
     try {
       const { error } = await supabase.auth.signOut();
       if (error) throw error;
-
       router.push("/");
     } catch (error) {
       console.error("Error logging out:", error);
@@ -122,13 +102,16 @@ export default function Settings() {
       style={styles.container}
       source={require("@/assets/images/Paper_texture.png")}
     >
-      <View style={styles.wrapper}>
-        <View style={styles.content}>
-          <Text style={styles.heading}>Nickname</Text>
-          <View>
+      {/* You can match the exact layout style from Auth */}
+      <View style={styles.mainWrapper}>
+        <View style={styles.mainTitleWrapper}>
+          <Text style={GlobalStyles.appText1}>Settings</Text>
+        </View>
+
+        <View style={styles.formWrapper}>
+          <View style={styles.inputWrapper}>
+            <Text style={styles.inputLabel}>Nickname</Text>
             <TextInput
-              value={inputValue}
-              placeholder="Enter your nickname"
               style={[
                 styles.input,
                 isFocused ? styles.inputFocused : styles.input,
@@ -137,12 +120,15 @@ export default function Settings() {
               onFocus={() => setIsFocused(true)}
               onBlur={() => setIsFocused(false)}
               onChangeText={(text) => setInputValue(text)}
+              value={inputValue}
+              placeholder="Enter your nickname"
+              autoCapitalize="none"
             />
-            <Text style={styles.characterCounter}>
+            <Text style={styles.counterText}>
               {inputValue.length}/10 Characters
             </Text>
           </View>
-          <View>
+          <View style={styles.helperTextWrapper}>
             <Text style={styles.helperText}>
               • A maximum length of 10 Characters
             </Text>
@@ -151,11 +137,24 @@ export default function Settings() {
             </Text>
           </View>
         </View>
-        <CustomButton
-          text={loading ? "SAVING..." : "SAVE"}
-          onPress={handleSave}
-          isDisabled={isButtonDisabled || loading}
-        />
+
+        <View style={styles.buttonWrapper}>
+          {/* Save button (no extra TouchableOpacity wrapper) */}
+          <CustomButton
+            text={loading ? "SAVING..." : "SAVE"}
+            onPress={handleSave}
+            isDisabled={isButtonDisabled || loading}
+          />
+        </View>
+
+        <View style={styles.buttonWrapper}>
+          {/* Sign out button (no extra TouchableOpacity wrapper) */}
+          <CustomButton
+            text="SIGN OUT"
+            onPress={handleLogout}
+            isDisabled={loading}
+          />
+        </View>
       </View>
     </ImageBackground>
   );
@@ -163,26 +162,31 @@ export default function Settings() {
 
 const styles = StyleSheet.create({
   container: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
+    width: width,
     flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: 50,
   },
-  wrapper: {
-    width: "80%",
+  mainWrapper: {
+    width: width * 0.8,
     maxWidth: 450,
-    marginHorizontal: 40,
   },
-  content: {
-    display: "flex",
-    flexDirection: "column",
-    gap: 38,
-    marginBottom: 52,
+  mainTitleWrapper: {
+    marginBottom: 36,
+    alignItems: "center",
   },
-  heading: {
-    fontFamily: "GmarketSansBold",
-    textAlign: "center",
-    fontSize: 24,
+  formWrapper: {
+    marginBottom: 40,
+  },
+  inputWrapper: {
+    marginBottom: 20,
+  },
+  inputLabel: {
+    fontFamily: "GmarketSansMedium",
+    fontSize: 12,
+    color: "#FF00A1",
+    marginBottom: 6,
   },
   input: {
     fontFamily: "GmarketSansMedium",
@@ -191,25 +195,27 @@ const styles = StyleSheet.create({
     borderColor: "#848484",
     paddingVertical: 10,
     textDecorationLine: "none",
-    marginBottom: 8,
   },
   inputFocused: {
     backgroundColor: "#D9D9D9",
   },
+  counterText: {
+    fontFamily: "GmarketSansMedium",
+    color: "#57BEF7",
+    fontSize: 10,
+    textAlign: "right",
+    marginTop: 4,
+  },
+  helperTextWrapper: {
+    marginTop: 10,
+  },
   helperText: {
     fontFamily: "GmarketSansMedium",
     color: "#848484",
-    paddingVertical: 4,
     fontSize: 12,
     lineHeight: 20,
   },
-  characterCounter: {
-    fontFamily: "GmarketSansMedium",
-    color: "#57BEF7",
-    textAlign: "right",
-    fontSize: 10,
-  },
-  logoutWrapper: {
-    marginTop: 20,
+  buttonWrapper: {
+    marginBottom: 20,
   },
 });
