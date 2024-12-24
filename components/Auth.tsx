@@ -40,7 +40,6 @@ export default function Auth({ onUsernameFetch }: AuthProps) {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
-  const isButtonDisabled = email.trim() === "" || password.trim() === "";
   const router = useRouter();
 
   async function signUpWithEmail() {

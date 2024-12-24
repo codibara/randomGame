@@ -6,12 +6,10 @@ import {
   ImageBackground,
   Text,
   TextInput,
-  TouchableOpacity,
 } from "react-native";
 import { useRouter } from "expo-router";
 import { supabase } from "../lib/supabase";
 import CustomButton from "@/components/ui/button";
-import GlobalStyles from "@/styles/globalStyles";
 
 const { width, height } = Dimensions.get("window");
 
@@ -105,12 +103,10 @@ export default function Settings() {
       {/* You can match the exact layout style from Auth */}
       <View style={styles.mainWrapper}>
         <View style={styles.mainTitleWrapper}>
-          <Text style={GlobalStyles.appText1}>Settings</Text>
+          <Text style={styles.heading}>Nickname</Text>
         </View>
-
         <View style={styles.formWrapper}>
           <View style={styles.inputWrapper}>
-            <Text style={styles.inputLabel}>Nickname</Text>
             <TextInput
               style={[
                 styles.input,
@@ -146,15 +142,13 @@ export default function Settings() {
             isDisabled={isButtonDisabled || loading}
           />
         </View>
-
-        <View style={styles.buttonWrapper}>
-          {/* Sign out button (no extra TouchableOpacity wrapper) */}
+        {/* <View style={styles.buttonWrapper}>
           <CustomButton
             text="SIGN OUT"
             onPress={handleLogout}
             isDisabled={loading}
           />
-        </View>
+        </View> */}
       </View>
     </ImageBackground>
   );
@@ -187,6 +181,11 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: "#FF00A1",
     marginBottom: 6,
+  },
+  heading: {
+    fontFamily: "GmarketSansBold",
+    textAlign: "center",
+    fontSize: 24,
   },
   input: {
     fontFamily: "GmarketSansMedium",
