@@ -17,6 +17,7 @@ import { useRouter } from "expo-router";
 
 import CustomButton from "./ui/button";
 import GlobalStyles from "@/styles/globalStyles";
+import { Ionicons } from "@expo/vector-icons";
 
 const { width, height } = Dimensions.get("window");
 
@@ -175,7 +176,7 @@ export default function Auth({ onUsernameFetch }: AuthProps) {
               ]}
               onChangeText={(text) => setEmail(text)}
               value={email}
-              placeholder="youremail@email.com"
+              placeholder="example@email.com"
               autoCapitalize={"none"}
               onFocus={() => setIsFocused(true)}
               onBlur={() => setIsFocused(false)}
@@ -205,9 +206,10 @@ export default function Auth({ onUsernameFetch }: AuthProps) {
                 onPress={() => setIsPasswordVisible(!isPasswordVisible)}
                 style={styles.toggleButton}
               >
-                <Text style={styles.toggleText}>
-                  {isPasswordVisible ? "Hide" : "Show"}
-                </Text>
+                <Ionicons
+                  name={isPasswordVisible ? "eye-off" : "eye"}
+                  size={24}
+                />
               </TouchableOpacity>
             </View>
             {passwordError ? (
@@ -270,10 +272,6 @@ const styles = StyleSheet.create({
   },
   toggleButton: {
     marginLeft: 10,
-  },
-  toggleText: {
-    fontFamily: "GmarketSansMedium",
-    color: "#57BEF7",
   },
   inputFocused: {
     backgroundColor: "#D9D9D9",

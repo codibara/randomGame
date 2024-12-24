@@ -95,7 +95,6 @@ export default function RootLayout() {
         duration: 300,
         useNativeDriver: false,
       }).start(() => setMenuVisible(false));
-      console.log("closed");
     } else {
       setMenuVisible(true);
       Animated.timing(menuAnimation, {
@@ -103,7 +102,7 @@ export default function RootLayout() {
         duration: 300,
         useNativeDriver: false,
       }).start();
-      console.log("opened");
+      alert("opened");
     }
   };
 
@@ -302,8 +301,6 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     borderWidth: 1,
     borderColor: "#FF00A1",
-    zIndex: 100,
-    elevation: 10,
   },
   menu: {
     position: "absolute",

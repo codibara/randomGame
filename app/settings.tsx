@@ -100,7 +100,6 @@ export default function Settings() {
       style={styles.container}
       source={require("@/assets/images/Paper_texture.png")}
     >
-      {/* You can match the exact layout style from Auth */}
       <View style={styles.mainWrapper}>
         <View style={styles.mainTitleWrapper}>
           <Text style={styles.heading}>Nickname</Text>
@@ -135,20 +134,19 @@ export default function Settings() {
         </View>
 
         <View style={styles.buttonWrapper}>
-          {/* Save button (no extra TouchableOpacity wrapper) */}
           <CustomButton
             text={loading ? "SAVING..." : "SAVE"}
             onPress={handleSave}
             isDisabled={isButtonDisabled || loading}
           />
         </View>
-        {/* <View style={styles.buttonWrapper}>
+        <View style={styles.buttonWrapper}>
           <CustomButton
             text="SIGN OUT"
             onPress={handleLogout}
             isDisabled={loading}
           />
-        </View> */}
+        </View>
       </View>
     </ImageBackground>
   );
