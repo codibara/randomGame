@@ -251,23 +251,23 @@ export default function RootLayout() {
                     onPress={toggleMenu}
                   />
                 ),
-                headerRight: () => (
-                  <Ionicons
-                    name="log-out-outline"
-                    size={24}
-                    color="#000"
-                    onPress={async () => {
-                      try {
-                        const { error } = await supabase.auth.signOut();
-                        if (error) throw error;
-                        router.push("/");
-                      } catch (error) {
-                        console.error("Error logging out:", error);
-                      }
-                    }}
-                    style={{ marginRight: 10 }}
-                  />
-                ),
+                // headerRight: () => (
+                //   <Ionicons
+                //     name="log-out-outline"
+                //     size={24}
+                //     color="#000"
+                //     onPress={async () => {
+                //       try {
+                //         const { error } = await supabase.auth.signOut();
+                //         if (error) throw error;
+                //         router.push("/");
+                //       } catch (error) {
+                //         console.error("Error logging out:", error);
+                //       }
+                //     }}
+                //     style={{ marginRight: 10 }}
+                //   />
+                // ),
               }}
             />
           </Stack>
@@ -284,7 +284,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#010101",
   },
   logo: {
-    width: screenWidth,
+    width: 300,
+    height: 300,
     aspectRatio: 1/1,
     resizeMode: "contain",
   },
@@ -296,7 +297,8 @@ const styles = StyleSheet.create({
     top: 0,
     bottom: 0,
     left: 0,
-    width: screenWidth * 0.70,
+    width: screenWidth * 0.7,
+    maxWidth: 300,
     backgroundColor: "#010101",
     zIndex: 10,
     shadowColor: "#000",

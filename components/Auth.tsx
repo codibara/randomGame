@@ -185,7 +185,7 @@ export default function Auth({ onUsernameFetch }: AuthProps) {
         </View>
         <View>
           <CustomButton
-            text={"Sign up / Sign in"}
+            text={"Sign up"}
             onPress={() => signUpWithEmail()}
             isDisabled={loading}
           />

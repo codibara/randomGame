@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
         paddingBottom: 20,
         paddingHorizontal: 20,
         marginTop: -24,
-
+        marginBottom: 60,
     },
     section2Heading: {
         fontFamily: "GmarketSansBold",

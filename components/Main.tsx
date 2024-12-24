@@ -143,6 +143,7 @@ const styles = StyleSheet.create({
     display: "flex",
     justifyContent: "flex-end",
     width: width * 0.9,
+    maxWidth: 400,
     aspectRatio: 13 / 21,
     marginBottom: 20,
     backgroundColor: "#fff",

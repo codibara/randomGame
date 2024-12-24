@@ -13,15 +13,15 @@ export default function GameDetail({ game }: GameDetailProps) {
     <View style={styles.container}>
       <ImageBackground 
         style={styles.titleContainer}
-        source={require("@/assets/images/torn-paper.png")}
+        source={require("@/assets/images/paper-texture4.png")}
       >
         <Text style={styles.korTitle}>{game.KorName}</Text>
         <Text style={styles.engTitle} >{game.EngName}</Text>
       </ImageBackground>
       <View style={styles.attributeWrapper}>
         <AttributeCard heading="Difficulty" value={game.Attributes.Difficulty} emoji= {"😵‍💫"} isEmoji={true} />
-        <AttributeCard heading="NoiseLevel" value={game.Attributes.NoiseLevel} emoji= {"🔊"} isEmoji={true} />
-        <AttributeCard heading="RiskLevel" value={game.Attributes.RiskLevel} emoji= {"🍺"} isEmoji={true} />
+        <AttributeCard heading="Noise Level" value={game.Attributes.NoiseLevel} emoji= {"🔊"} isEmoji={true} />
+        <AttributeCard heading="Risk Level" value={game.Attributes.RiskLevel} emoji= {"🍺"} isEmoji={true} />
         <AttributeCard heading="Required" value={game.Attributes.Required} isEmoji={false} />
       </View>
         <ImageBackground 
@@ -38,15 +38,16 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
   },
   titleContainer: {
-    height: 300,
+    height: 210,
     flex: 1,
     display: "flex",
     gap: 8,
-    marginBottom: 16,
+    marginBottom: 32,
     paddingTop: 26,
     padding: 20,
   },
   korTitle:{
+    marginTop: 12,
     fontFamily: "GmarketSansLight",
   },
   pronounceText:{
