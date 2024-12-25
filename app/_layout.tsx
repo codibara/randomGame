@@ -102,7 +102,6 @@ export default function RootLayout() {
         duration: 300,
         useNativeDriver: false,
       }).start();
-      alert("opened");
     }
   };
 
@@ -182,8 +181,9 @@ export default function RootLayout() {
           {/* Navigation */}
           <Stack
             screenOptions={{
-              // headerStyle: { backgroundColor: "#E9E9E9" },
-              headerStyle: { backgroundColor: "transparent" },
+              headerStyle: { backgroundColor: "#E9E9E9" },
+              headerShadowVisible: false,
+              //headerStyle: { backgroundColor: "transparent" },
             }}
           >
             <Stack.Screen
@@ -191,18 +191,16 @@ export default function RootLayout() {
               options={{
                 headerShown: !!session,
                 headerTitle: "",
-                headerTransparent: true,
                 headerBackVisible: false,
+                headerTransparent: true,
                 headerLeft: () => (
-                  <TouchableOpacity onPress={toggleMenu} activeOpacity={0.7}>
                     <Ionicons
                       name="menu-outline"
                       size={24}
                       color="#000"
                       onPress={toggleMenu}
-                      style={styles.menuIcon}
+                      //style={styles.menuIcon}
                     />
-                  </TouchableOpacity>
                 ),
                 // headerRight: () => (
                 //   <Ionicons
@@ -218,7 +216,6 @@ export default function RootLayout() {
               name="game/[id]"
               options={{
                 headerTitle: "",
-                headerTransparent: true,
                 headerBackVisible: false,
                 headerLeft: () => (
                     <Ionicons
@@ -242,7 +239,6 @@ export default function RootLayout() {
               name="settings"
               options={{
                 headerTitle: "SETTINGS",
-                headerTransparent: true,
                 headerBackVisible: false,
                 headerTitleAlign: "center",
                 headerLeft: () => (
