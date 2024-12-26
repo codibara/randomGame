@@ -4,7 +4,7 @@ import { supabase } from "../lib/supabase";
 import Auth from "../components/Auth";
 import { Session } from "@supabase/supabase-js";
 import Main from "@/components/Main";
-import { Text, StyleSheet, View, ActivityIndicator } from "react-native";
+import { Text, StyleSheet, View, ActivityIndicator, ImageBackground } from "react-native";
 
 export default function HomeScreen() {
   const [session, setSession] = useState<Session | null>(null);
@@ -68,7 +68,10 @@ export default function HomeScreen() {
   }
 
   return (
-    <View style={styles.container}>
+    <ImageBackground
+        style={styles.container}
+        source={require("@/assets/images/Paper_texture.png")}
+      >
       {session && session.user ? (
         <>
           {!isProfileComplete && (
@@ -87,7 +90,7 @@ export default function HomeScreen() {
           <Auth onUsernameFetch={setUsername} />
         </View>
       )}
-    </View>
+    </ImageBackground>
   );
 }
 

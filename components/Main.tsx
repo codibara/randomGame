@@ -44,10 +44,7 @@ export default function Main({ username }: { username: string }) {
       <View style={styles.cardAnimationContainer}>
         <MainCardAnimation />
       </View>
-      <ImageBackground
-        style={styles.mainContainer}
-        source={require("@/assets/images/Paper_texture.png")}
-      >
+      <View style={styles.mainContainer}>
         <View style={styles.mainTitleWrapper}>
           <Text style={GlobalStyles.appText1}>{username}'s FAV</Text>
           <Text style={GlobalStyles.appText2}>Random</Text>
@@ -107,7 +104,7 @@ export default function Main({ username }: { username: string }) {
             </ImageBackground>
           </View>
         </Modal>
-      </ImageBackground>
+      </View>
     </>
   );
 }
@@ -118,6 +115,7 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     zIndex: 5,
+    backgroundColor: 'transparent',
   },
   mainContainer: {
     flex: 1,

@@ -197,7 +197,7 @@ export default function RootLayout() {
                     <Ionicons
                       name="menu-outline"
                       size={24}
-                      color="#000"
+                      color={colorScheme === "dark" ? "#ffffff" : "#010101"}
                       onPress={toggleMenu}
                       //style={styles.menuIcon}
                     />
@@ -206,7 +206,7 @@ export default function RootLayout() {
                 //   <Ionicons
                 //     name="share-social-outline"
                 //     size={24}
-                //     color="#000"
+                //     color={colorScheme === "dark" ? "#ffffff" : "#010101"}
                 //     onPress={handleShare}
                 //   />
                 // )
@@ -221,7 +221,7 @@ export default function RootLayout() {
                     <Ionicons
                       name="menu-outline"
                       size={24}
-                      color="#000"
+                      color={colorScheme === "dark" ? "#ffffff" : "#010101"}
                       onPress={toggleMenu}
                     />
                 ),
@@ -229,7 +229,7 @@ export default function RootLayout() {
                 //   <Ionicons
                 //     name="share-social-outline"
                 //     size={24}
-                //     color="#000"
+                //     color={colorScheme === "dark" ? "#ffffff" : "#010101"}
                 //     onPress={handleShare}
                 //   />
                 // )
@@ -245,7 +245,7 @@ export default function RootLayout() {
                   <Ionicons
                     name="menu-outline"
                     size={24}
-                    color="#000"
+                    color={colorScheme === "dark" ? "#ffffff" : "#010101"}
                     onPress={toggleMenu}
                   />
                 ),
@@ -253,7 +253,7 @@ export default function RootLayout() {
                 //   <Ionicons
                 //     name="log-out-outline"
                 //     size={24}
-                //     color="#000"
+                //     color={colorScheme === "dark" ? "#ffffff" : "#010101"}
                 //     onPress={async () => {
                 //       try {
                 //         const { error } = await supabase.auth.signOut();
