@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     position: "absolute",
     width: width * 0.9,
-    marginTop: height * 0.15,
+    marginTop: height * 0.1,
     maxWidth: 450,
     zIndex: 1,
   },

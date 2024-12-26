@@ -192,7 +192,7 @@ export default function RootLayout() {
                 headerShown: !!session,
                 headerTitle: "",
                 headerBackVisible: false,
-                headerTransparent: true,
+                headerTransparent: false,
                 headerLeft: () => (
                     <Ionicons
                       name="menu-outline"

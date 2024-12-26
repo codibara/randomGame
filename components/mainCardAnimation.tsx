@@ -12,7 +12,7 @@ const { width, height } = Dimensions.get("window");
 const CARD_COUNT = 15; // Number of cards per image
 const RADIUS_MIN = width * 0.5; // Minimum distance from the center
 const RADIUS_MAX = width * 1.3; // Max distance from the center
-const CENTER_OFFSET_Y = -height * 0.2;
+const CENTER_OFFSET_Y = -height * 0.25;
 
 const cards = [
     require('@/assets/images/cardBack1.png'),
