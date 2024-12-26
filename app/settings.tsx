@@ -17,7 +17,7 @@ export default function Settings() {
   const [isFocused, setIsFocused] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const [loading, setLoading] = useState(false);
-  const isButtonDisabled = inputValue.trim() === "";
+  const isButtonDisabled = inputValue.trim() === "" || inputValue.length > 10;
   const router = useRouter();
 
   useEffect(() => {
@@ -71,17 +71,17 @@ export default function Settings() {
       });
 
       if (error) throw error;
-      console.log("Success");
-      router.push("/");
+        console.log("Success");
+        router.push("/");
     } catch (error) {
-      console.error("Error saving nickname:", error);
-      if (error instanceof Error) {
-        alert(error.message);
-      } else {
-        alert("An unexpected error occurred.");
-      }
+        console.error("Error saving nickname:", error);
+        if (error instanceof Error) {
+          alert(error.message);
+        } else {
+          alert("An unexpected error occurred.");
+        }
     } finally {
-      setLoading(false);
+        setLoading(false);
     }
   };
 
@@ -119,7 +119,9 @@ export default function Settings() {
               placeholder="Enter your nickname"
               autoCapitalize="none"
             />
-            <Text style={styles.counterText}>
+            <Text style={[styles.counterText,
+              inputValue.length > 10 ? styles.counterWarningText : styles.counterText
+            ]}>
               {inputValue.length}/10 Characters
             </Text>
           </View>
@@ -202,6 +204,9 @@ const styles = StyleSheet.create({
     fontSize: 10,
     textAlign: "right",
     marginTop: 4,
+  },
+  counterWarningText: {
+    color: "#FF00A1",
   },
   helperTextWrapper: {
     marginTop: 10,
