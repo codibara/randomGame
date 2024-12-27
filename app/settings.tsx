@@ -71,17 +71,17 @@ export default function Settings() {
       });
 
       if (error) throw error;
-        console.log("Success");
-        router.push("/");
+      console.log("Success");
+      router.push("/");
     } catch (error) {
-        console.error("Error saving nickname:", error);
-        if (error instanceof Error) {
-          alert(error.message);
-        } else {
-          alert("An unexpected error occurred.");
-        }
+      console.error("Error saving nickname:", error);
+      if (error instanceof Error) {
+        alert(error.message);
+      } else {
+        alert("An unexpected error occurred.");
+      }
     } finally {
-        setLoading(false);
+      setLoading(false);
     }
   };
 
@@ -119,9 +119,14 @@ export default function Settings() {
               placeholder="Enter your nickname"
               autoCapitalize="none"
             />
-            <Text style={[styles.counterText,
-              inputValue.length > 10 ? styles.counterWarningText : styles.counterText
-            ]}>
+            <Text
+              style={[
+                styles.counterText,
+                inputValue.length > 10
+                  ? styles.counterWarningText
+                  : styles.counterText,
+              ]}
+            >
               {inputValue.length}/10 Characters
             </Text>
           </View>
@@ -142,13 +147,13 @@ export default function Settings() {
             isDisabled={isButtonDisabled || loading}
           />
         </View>
-        <View style={styles.buttonWrapper}>
+        {/* <View style={styles.buttonWrapper}>
           <CustomButton
             text="SIGN OUT"
             onPress={handleLogout}
             isDisabled={loading}
           />
-        </View>
+        </View> */}
       </View>
     </ImageBackground>
   );

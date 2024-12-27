@@ -7,7 +7,7 @@ import {
 import { useFonts } from "expo-font";
 import { router, Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
-import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { SafeAreaProvider } from "react-native-safe-area-context";
 import { useEffect, useState, useRef } from "react";
 import {
   View,
@@ -166,7 +166,10 @@ export default function RootLayout() {
         <View style={styles.drawer}>
           {/* Sliding Drawer Menu */}
           <Animated.View
-            style={[styles.menu, { transform: [{ translateX: menuAnimation }] }]}
+            style={[
+              styles.menu,
+              { transform: [{ translateX: menuAnimation }] },
+            ]}
           >
             <Menu handler={toggleMenu} />
           </Animated.View>
@@ -188,43 +191,45 @@ export default function RootLayout() {
           >
             <Stack.Screen
               name="index"
-              options={{
-                headerShown: !!session,
-                headerTitle: "",
-                headerBackVisible: false,
-                headerTransparent: false,
-                headerLeft: () => (
-                    <Ionicons
-                      name="menu-outline"
-                      size={24}
-                      color={colorScheme === "dark" ? "#ffffff" : "#010101"}
-                      onPress={toggleMenu}
-                      //style={styles.menuIcon}
-                    />
-                ),
-                // headerRight: () => (
-                //   <Ionicons
-                //     name="share-social-outline"
-                //     size={24}
-                //     color={colorScheme === "dark" ? "#ffffff" : "#010101"}
-                //     onPress={handleShare}
-                //   />
-                // )
-              }}
+              options={{ headerShown: false }}
+              // options={{
+              //   headerShown: !!session,
+              //   headerTitle: "",
+              //   headerBackVisible: false,
+              //   headerTransparent: false,
+              //   headerLeft: () => (
+              //     <Ionicons
+              //       name="menu-outline"
+              //       size={24}
+              //       color={colorScheme === "dark" ? "#ffffff" : "#010101"}
+              //       onPress={toggleMenu}
+              //       //style={styles.menuIcon}
+              //     />
+              //   ),
+              //   // headerRight: () => (
+              //   //   <Ionicons
+              //   //     name="share-social-outline"
+              //   //     size={24}
+              //   //     color={colorScheme === "dark" ? "#ffffff" : "#010101"}
+              //   //     onPress={handleShare}
+              //   //   />
+              //   // )
+              // }}
             />
             <Stack.Screen
               name="game/[id]"
+              // options={{ headerShown: false }}
               options={{
                 headerTitle: "",
-                headerBackVisible: false,
-                headerLeft: () => (
-                    <Ionicons
-                      name="menu-outline"
-                      size={24}
-                      color={colorScheme === "dark" ? "#ffffff" : "#010101"}
-                      onPress={toggleMenu}
-                    />
-                ),
+                // headerBackVisible: true,
+                // headerLeft: () => (
+                //   <Ionicons
+                //     name="menu-outline"
+                //     size={24}
+                //     color={colorScheme === "dark" ? "#ffffff" : "#010101"}
+                //     onPress={toggleMenu}
+                //   />
+                // ),
                 // headerRight: () => (
                 //   <Ionicons
                 //     name="share-social-outline"
@@ -232,41 +237,42 @@ export default function RootLayout() {
                 //     color={colorScheme === "dark" ? "#ffffff" : "#010101"}
                 //     onPress={handleShare}
                 //   />
-                // )
+                // ),
               }}
             />
             <Stack.Screen
               name="settings"
-              options={{
-                headerTitle: "SETTINGS",
-                headerBackVisible: false,
-                headerTitleAlign: "center",
-                headerLeft: () => (
-                  <Ionicons
-                    name="menu-outline"
-                    size={24}
-                    color={colorScheme === "dark" ? "#ffffff" : "#010101"}
-                    onPress={toggleMenu}
-                  />
-                ),
-                // headerRight: () => (
-                //   <Ionicons
-                //     name="log-out-outline"
-                //     size={24}
-                //     color={colorScheme === "dark" ? "#ffffff" : "#010101"}
-                //     onPress={async () => {
-                //       try {
-                //         const { error } = await supabase.auth.signOut();
-                //         if (error) throw error;
-                //         router.push("/");
-                //       } catch (error) {
-                //         console.error("Error logging out:", error);
-                //       }
-                //     }}
-                //     style={{ marginRight: 10 }}
-                //   />
-                // ),
-              }}
+              options={{ headerShown: false }}
+              // options={{
+              //   headerTitle: "SETTINGS",
+              //   headerBackVisible: false,
+              //   headerTitleAlign: "center",
+              //   headerLeft: () => (
+              //     <Ionicons
+              //       name="menu-outline"
+              //       size={24}
+              //       color={colorScheme === "dark" ? "#ffffff" : "#010101"}
+              //       onPress={toggleMenu}
+              //     />
+              //   ),
+              //   // headerRight: () => (
+              //   //   <Ionicons
+              //   //     name="log-out-outline"
+              //   //     size={24}
+              //   //     color={colorScheme === "dark" ? "#ffffff" : "#010101"}
+              //   //     onPress={async () => {
+              //   //       try {
+              //   //         const { error } = await supabase.auth.signOut();
+              //   //         if (error) throw error;
+              //   //         router.push("/");
+              //   //       } catch (error) {
+              //   //         console.error("Error logging out:", error);
+              //   //       }
+              //   //     }}
+              //   //     style={{ marginRight: 10 }}
+              //   //   />
+              //   // ),
+              // }}
             />
           </Stack>
         </View>
@@ -291,7 +297,7 @@ const styles = StyleSheet.create({
   drawer: {
     flex: 1,
   },
-  menuIcon:{
+  menuIcon: {
     backgroundColor: "#ffffff",
     padding: 10,
     borderRadius: 30,
