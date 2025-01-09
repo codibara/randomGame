@@ -186,7 +186,7 @@ export default function RootLayout() {
           {/* Navigation */}
           <Stack
             screenOptions={{
-              // headerStyle: { backgroundColor: "#E9E9E9" },
+              //headerStyle: { backgroundColor: "#E9E9E9" },
               headerStyle: { backgroundColor: "transparent" },
             }}
           >
@@ -237,7 +237,6 @@ export default function RootLayout() {
                       name="menu-outline"
                       size={24}
                       color="#000"
-                      style={styles.menuIcon}
                     />
                   </TouchableOpacity>
                 ),
@@ -261,14 +260,13 @@ export default function RootLayout() {
                 headerLeft: () => (
                   <TouchableOpacity
                     onPressIn={toggleMenu}
-                    // onPressOut={toggleMenu}a
+                    // onPressOut={toggleMenu}
                     activeOpacity={0.7}
                   >
                     <Ionicons
                       name="menu-outline"
                       size={24}
                       color="#000"
-                      style={styles.menuIcon}
                     />
                   </TouchableOpacity>
                 ),

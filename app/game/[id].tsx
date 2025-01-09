@@ -36,6 +36,7 @@ export default function GameScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    marginTop: 54,
   },
 
 });
