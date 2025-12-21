@@ -42,18 +42,47 @@ export default function Auth({ onUsernameFetch }: AuthProps) {
   const isButtonDisabled = email.trim() === "" || password.trim() === "";
   const router = useRouter(); // Initialize useRouter
 
-  // Sign up with email
+  // Sign up with email (or sign in if user already exists)
   async function signUpWithEmail() {
     if (!validateInputs()) return;
 
     setLoading(true);
 
-
     try {
+      // Try to sign up first
       const { data, error } = await supabase.auth.signUp({
         email: email,
         password: password,
       });
+
+      // If user already exists, sign in instead
+      if (error && error.message.includes("already registered")) {
+        const { data: signInData, error: signInError } = await supabase.auth.signInWithPassword({
+          email: email,
+          password: password,
+        });
+
+        if (signInError) throw signInError;
+
+        if (signInData?.user) {
+          const userId = signInData.user.id;
+
+          // Fetch username from profiles table
+          const { data: profileData, error: profileError } = await supabase
+            .from("profiles")
+            .select("username")
+            .eq("id", userId)
+            .single();
+
+          if (profileError) throw profileError;
+
+          onUsernameFetch(profileData?.username || signInData.user.email || email);
+
+          // Navigate to the Home screen (existing user)
+          router.replace("/");
+        }
+        return;
+      }
 
       if (error) throw error;
 
