@@ -1,8 +1,8 @@
 {
   "expo": {
     "name": "randomGame",
-    "slug": "randomGame",
-    "version": "1.0.1",
+    "slug": "randomgame",
+    "version": "1.0.7",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "myapp",
@@ -10,7 +10,7 @@
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
-      "buildNumber": "2"
+      "buildNumber": "7"
     },
     "android": {
       "adaptiveIcon": {
@@ -18,7 +18,7 @@
         "backgroundColor": "#ffffff"
       },
       "package": "com.npaik.randomGame",
-      "versionCode": 2
+      "versionCode": 10
     },
     "web": {
       "bundler": "metro",
@@ -35,10 +35,29 @@
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
         }
+      ],
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "compileSdkVersion": 35,
+            "targetSdkVersion": 35,
+            "buildToolsVersion": "35.0.0"
+          }
+        }
       ]
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "bf2c79c5-a613-402e-9f82-1a8e205f3654"
+      }
+    },
+    "owner": "codibara"
   }
 }
